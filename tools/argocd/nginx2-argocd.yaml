@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nginx-app
+  name: nginx-app-2
   namespace: argocd
 spec:
   project: default
@@ -18,4 +18,4 @@ spec:
   syncPolicy:
     automated: {}
 
-# kubectl apply -f tools/argocd/nginx-argocd.yaml
+# kubectl apply -f tools/argocd/nginx2-argocd.yaml
