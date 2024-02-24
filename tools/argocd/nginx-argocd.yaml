@@ -6,9 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: 'latest'  # Atau spesifikasikan versi chart yang diinginkan
-    chart: nginx
+    repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
+    targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
+    path: application/helm-nginx/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    helm:
+      valueFiles:
+        - "values.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: argocd  # Ganti dengan namespace target di kluster Anda
