@@ -1,0 +1,11 @@
+adminPassword: "admin"
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      url: http://prometheus-server.monitoring.svc.cluster.local
+      access: proxy
+      isDefault: true
+# kubectl port-forward --namespace monitoring service/grafana 3000:80

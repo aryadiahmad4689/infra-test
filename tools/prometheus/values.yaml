@@ -1,0 +1,9 @@
+alertmanager:
+  enabled: false
+server:
+  global:
+    scrape_interval: 15s
+  extraScrapeConfigs:
+    - job_name: 'kubernetes-pods'
+      kubernetes_sd_configs:
+        - role: pod

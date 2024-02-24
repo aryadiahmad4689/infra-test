@@ -1,0 +1,14 @@
+server:
+  extraArgs:
+    - --insecure
+  service:
+    type: LoadBalancer
+    annotations:
+      # Tambahkan anotasi spesifik untuk penyedia layanan cloud Anda jika diperlukan
+  ingress:
+    enabled: false  # Pastikan ingress dinonaktifkan jika Anda tidak menggunakannya
+
+# helm install argocd argo/argo-cd --namespace argocd -f tools/argocd/argocd.yaml jika pertama
+# helm upgrade --install argocd argo/argo-cd --namespace argocd -f tools/argocd/argocd.yaml
+# get password default kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
