@@ -107,7 +107,7 @@ affinity: {}
 
 configMap: |
   server {
-      listen 0.0.0.0:8080;
+      listen 0.0.0.0:80;
       location /nginx_status {
           stub_status on;
           access_log off;
