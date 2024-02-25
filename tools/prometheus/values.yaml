@@ -12,27 +12,10 @@ server:
 
 prometheus:
   prometheusSpec:
-    additionalScrapeConfigs:
-      - job_name: 'service-nginx'
-        kubernetes_sd_configs:
-          - role: service
-        relabel_configs:
-          - source_labels: [__meta_kubernetes_service_label_myLabel]
-            action: keep
-            regex: myValue
-          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
-            action: keep
-            regex: "true"
-          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
-            action: replace
-            target_label: __metrics_path__
-            regex: (.+)
-          - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
-            action: replace
-            target_label: __address__
-            regex: ([^:]+)(?::\d+)?;(\d+)
-            replacement: $1:$2
-
+    scrapeConfigs:
+      - job_name: 'nginx'
+        static_configs:
+          - targets: ['nginx-application-service-xporter.argocd.svc.cluster.local:9113']
 # helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring -f tools/prometheus/values.yaml
-# export POD_NAME=$(kubectl get pods --namespace monitoring -l "app=prometheus-pushgateway,component=pushgateway" -o jsonpath="{.items[0].metadata.name}")
-# kubectl --namespace monitoring port-forward $POD_NAME 9091
+# export POD_NAME=$(kubectl get pods --namespace monitoring -l "app.kubernetes.io/name=prometheus,app.kubernetes.io/instance=prometheus" -o jsonpath="{.items[0].metadata.name}")
+# kubectl --namespace monitoring port-forward $POD_NAME 9090

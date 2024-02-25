@@ -41,6 +41,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  name: nginx-application-service-xporter
   type: ClusterIP
   port: 80
   annotations:
