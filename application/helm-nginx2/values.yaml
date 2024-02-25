@@ -20,7 +20,7 @@ serviceMonitor:
   port: 9113
 
 args:
-  - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:8080/stub_status
+  - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:8080/nginx_status
 
 imagePullSecrets: []
 nameOverride: ""
