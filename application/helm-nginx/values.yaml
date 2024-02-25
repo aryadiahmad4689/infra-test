@@ -40,11 +40,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  ports:
-    - port: 8080
-      targetPort: 8080
-      protocol: TCP
-      name: metrics
+  port: 80
 
 ingress:
   enabled: false
