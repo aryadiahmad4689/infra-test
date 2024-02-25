@@ -43,6 +43,12 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 80
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "8080"
+  labels:
+    myLabel: myValue
 
 ingress:
   enabled: false

@@ -1,9 +1,23 @@
-alertmanager:
-  enabled: false
-server:
-  global:
-    scrape_interval: 15s
-  extraScrapeConfigs:
-    - job_name: 'kubernetes-pods'
-      kubernetes_sd_configs:
-        - role: pod
+# values.yaml
+prometheus:
+  prometheusSpec:
+    additionalScrapeConfigs:
+      - job_name: 'service-nginx'
+        kubernetes_sd_configs:
+          - role: service
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_service_label_myLabel]
+            action: keep
+            regex: myValue
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]
+            action: keep
+            regex: "true"
+          - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]
+            action: replace
+            target_label: __address__
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
