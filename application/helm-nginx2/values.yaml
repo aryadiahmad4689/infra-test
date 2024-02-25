@@ -19,8 +19,11 @@ serviceMonitor:
   path: /metrics
   port: 9113
 
-args:
-  - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:80/nginx_status
+# ... other configurations ...
+
+exporter:
+  args:
+    - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:80/nginx_status
 
 imagePullSecrets: []
 nameOverride: ""
