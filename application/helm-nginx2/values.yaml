@@ -23,7 +23,7 @@ serviceMonitor:
 
 exporter:
   args:
-    - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:80/nginx_status
+    - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:80/stub_status
 
 imagePullSecrets: []
 nameOverride: ""

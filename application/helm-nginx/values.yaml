@@ -40,7 +40,7 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 80
+  port: 3933
 
 ingress:
   enabled: false
@@ -115,3 +115,5 @@ configMap: |
           deny all;
       }
   }
+
+# kubectl port-forward svc/nginx-app-helm-nginx -n argocd 9997:80
