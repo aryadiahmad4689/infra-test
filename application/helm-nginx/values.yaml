@@ -105,4 +105,13 @@ tolerations: []
 
 affinity: {}
 
-
+configMap: |
+  server {
+      listen 0.0.0.0:8080;
+      location /nginx_status {
+          stub_status on;
+          access_log off;
+          allow 127.0.0.1;
+          deny all;
+      }
+  }
