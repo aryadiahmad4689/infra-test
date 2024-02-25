@@ -17,5 +17,6 @@ spec:
     namespace: argocd  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: {}
+    
 
 # kubectl apply -f tools/argocd/nginx2-argocd.yaml
