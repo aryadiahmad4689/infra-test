@@ -1,29 +1,13 @@
-# Default values for helm-nginx2.
+# Default values for helm-nginx.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: nginx/nginx-prometheus-exporter
-  tag: "0.9.0"  # Ganti dengan versi yang diinginkan
+  repository: nginx
   pullPolicy: IfNotPresent
-
-service:
-  type: ClusterIP
-  port: 9113
-
-serviceMonitor:
-  enabled: true
-  interval: 30s
-  path: /metrics
-  port: 9113
-
-# ... other configurations ...
-
-exporter:
-  args:
-    - --nginx.scrape-uri=http://nginx-app-helm-nginx.argocd.svc.cluster.local:80/stub_status
+  tag: stable-alpine
 
 imagePullSecrets: []
 nameOverride: ""
@@ -53,6 +37,10 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
 
 ingress:
   enabled: false
@@ -94,7 +82,7 @@ readinessProbe:
 autoscaling:
   enabled: false
   minReplicas: 1
-  maxReplicas: 100
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
@@ -116,3 +104,16 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+configMap: |
+  server {
+      listen 0.0.0.0:80;
+      location /nginx_status {
+          stub_status on;
+          access_log off;
+          allow 127.0.0.1;
+          deny all;
+      }
+  }
+
+# kubectl port-forward svc/nginx-app-helm-nginx -n argocd 9997:80
