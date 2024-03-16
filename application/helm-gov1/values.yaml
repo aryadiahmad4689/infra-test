@@ -5,10 +5,10 @@
 replicaCount: 1
 
 image:
-  repository: 192.168.49.2:5000/goappv2
+  repository: ariadiahmad/goappv1
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "v1"
 
 imagePullSecrets: []
 nameOverride: ""
