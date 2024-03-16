@@ -2,3 +2,5 @@ kubectl port-forward --namespace kube-system service/registry 5000:80 -> lihat r
 docker rmi id_image -> hapus image docker
 docker tag image:latest ip:port/image:tag
 docker push ip:port/image:tag -> push ke registry
+
+minikube start --insecure-registry="192.168.49.2:5000"
