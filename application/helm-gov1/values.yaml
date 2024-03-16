@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: goappv1
+  repository: 192.168.49.2:5000/goappv1
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
