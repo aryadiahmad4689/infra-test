@@ -19,7 +19,7 @@ FROM alpine:latest
 COPY --from=builder /app/main .
 
 # Expose port 8080
-EXPOSE 8080
+EXPOSE 8099
 
 # Jalankan binary aplikasi
 CMD ["./main"]
