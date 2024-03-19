@@ -5,7 +5,7 @@
 
 # export POD_NAME=$(kubectl get pods --namespace monitoring -l "app.kubernetes.io/name=prometheus,app.kubernetes.io/instance=prometheus" -o jsonpath="{.items[0].metadata.name}")
 # kubectl --namespace monitoring port-forward $POD_NAME 9090
-# helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring -f custom-values.yaml
+# helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring -f tools/prometheus/values.yaml
 rbac:
   create: true
 
@@ -753,11 +753,28 @@ serverFiles:
         static_configs:
           - targets:
             - localhost:9090
+                
+      - job_name: kube-state-metrics
+        metrics_path: /metrics
+        static_configs:
+          - targets: 
+              - kube-state-metrics.monitoring.svc.cluster.local:8010
     
-      - job_name: nginx
+      - job_name: 'blackbox'
+        metrics_path: /probe
+        params:
+          module: [http_2xx]  # Sesuai dengan nama modul yang Anda definisikan
         static_configs:
           - targets:
-            - nginx-app-2-helm-nginx2.argocd.svc.cluster.local:80
+              - http://goapp-v1-helm-gov1.argocd.svc.cluster.local/
+              # Tambahkan target lainnya sesuai kebutuhan
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - target_label: __address__
+            replacement: exporter-blackbox-exporter.argocd.svc.cluster.local:9115  # Alamat tempat Blackbox Exporter berjalan
+          - source_labels: [__param_target]
+            target_label: instance
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.

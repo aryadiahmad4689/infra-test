@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nama-aplikasi-argocd  # Anda perlu menambahkan nama untuk aplikasi ini
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
+    targetRevision: 'master'  # Atau spesifikasikan branch, tag, atau commit yang diinginkan
+    path: 'tools/argocd/'  # Pastikan path ini benar dan mengarah ke helm chart atau manifest Kubernetes
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd  # Anda bisa mengganti ini dengan namespace yang Anda inginkan
+  syncPolicy:
+    automated:
+      selfHeal: true  # Opsi ini akan mengaktifkan self-healing, jika tidak diinginkan, bisa dihilangkan
+      prune: true  # Opsi ini akan menghapus resources yang tidak lagi didefinisikan di git, jika tidak diinginkan, bisa dihilangkan
