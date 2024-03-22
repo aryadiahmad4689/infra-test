@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: run-app  # Anda perlu menambahkan nama untuk aplikasi ini
-  namespace: staging
+  namespace: argocd
 spec:
   project: default
   source:
@@ -11,10 +11,11 @@ spec:
     path: 'tools/argocd/'  # Pastikan path ini benar dan mengarah ke helm chart atau manifest Kubernetes
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: staging  # Anda bisa mengganti ini dengan namespace yang Anda inginkan
+    namespace: argocd # Anda bisa mengganti ini dengan namespace yang Anda inginkan
   syncPolicy:
     automated:
       selfHeal: true  # Opsi ini akan mengaktifkan self-healing, jika tidak diinginkan, bisa dihilangkan
       prune: true  # Opsi ini akan menghapus resources yang tidak lagi didefinisikan di git, jika tidak diinginkan, bisa dihilangkan
 
-# kubectl apply -f tools/run_app/staging_argocd.yaml
+# kubectl apply -f tools/run_app/run_app_argocd.yaml
+#
