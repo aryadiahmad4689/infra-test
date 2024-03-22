@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: goapp-v2
-  namespace: argocd
+  namespace: staging
 spec:
   project: default
   source:
@@ -14,7 +14,7 @@ spec:
         - "values.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: argocd  # Ganti dengan namespace target di kluster Anda
+    namespace: staging  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: {}
     

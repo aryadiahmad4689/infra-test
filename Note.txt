@@ -8,3 +8,7 @@ minikube start --insecure-registry="192.168.49.2:5000"
 // login docker temp
 export DOCKER_CONFIG=$(mktemp -d)
 docker login
+
+// login ke cloud kita
+gcloud container clusters get-credentials test-cluster --zone us-central1-c --project tetscloud
+
