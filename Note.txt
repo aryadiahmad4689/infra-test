@@ -12,3 +12,9 @@ docker login
 // login ke cloud kita
 gcloud container clusters get-credentials test-cluster --zone us-central1-c --project tetscloud
 
+// argocd install
+helm install argocd argo/argo-cd --namespace argocd 
+
+helm install argocd-staging argo/argo-cd --namespace argocd-staging
+helm install argocd-prod argo/argo-cd --namespace argocd-prod
+

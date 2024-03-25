@@ -17,5 +17,5 @@ spec:
       selfHeal: true  # Opsi ini akan mengaktifkan self-healing, jika tidak diinginkan, bisa dihilangkan
       prune: true  # Opsi ini akan menghapus resources yang tidak lagi didefinisikan di git, jika tidak diinginkan, bisa dihilangkan
 
-# kubectl apply -f tools/run_app/run_app_argocd.yaml
+# kubectl apply -f tools/run_app/staging_argocd.yaml
 #
