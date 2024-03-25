@@ -8,13 +8,13 @@ spec:
   source:
     repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
     targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
-    path: application/helm-gov1/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    path: application/helm-app2/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
     helm:
       valueFiles:
         - "values.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: argocd  # Ganti dengan namespace target di kluster Anda
+    namespace: staging  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: {}
     

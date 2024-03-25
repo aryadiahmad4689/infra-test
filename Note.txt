@@ -18,3 +18,5 @@ helm install argocd argo/argo-cd --namespace argocd
 helm install argocd-staging argo/argo-cd --namespace argocd-staging
 helm install argocd-prod argo/argo-cd --namespace argocd-prod
 
+Show Values
+helm show values argo/argo-cd > tools/run_app/argocd.yaml

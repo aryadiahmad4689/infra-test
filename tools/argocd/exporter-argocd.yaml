@@ -14,7 +14,7 @@ spec:
         - "values.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: argocd  # Ganti dengan namespace target di kluster Anda
+    namespace: exporter  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: {}
     
