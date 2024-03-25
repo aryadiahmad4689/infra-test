@@ -5,10 +5,10 @@ on:
     branches:
       - master  # Atau branch yang Anda gunakan
 env:
-REGISTRY: us.gcr.io
-REGISTRY_NAME: appv1
-PROJECT_ID: tetscloud
-SHA: ${GITHUB_SHA}
+  REGISTRY: us.gcr.io
+  REGISTRY_NAME: appv1
+  PROJECT_ID: tetscloud
+  SHA: ${GITHUB_SHA}
 
 jobs:
   build-and-push:
