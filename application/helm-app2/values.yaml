@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   repository: us.gcr.io/tetscloud/appv1
   pullPolicy: IfNotPresent
-  tag: "latest"
+  tag: "v1.0.1"
 env:
   DATA_OKE: "ARIADI"
   OKE_OKE: "ARIADI"
