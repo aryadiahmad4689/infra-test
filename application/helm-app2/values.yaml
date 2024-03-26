@@ -8,6 +8,8 @@ image:
   repository: us.gcr.io/tetscloud/appv1
   pullPolicy: IfNotPresent
   tag: "latest"
+env:
+  DATA_OKE: "ARIADI"
 
 imagePullSecrets: []
 nameOverride: ""
