@@ -20,3 +20,10 @@ helm install argocd-prod argo/argo-cd --namespace argocd-prod
 
 Show Values
 helm show values argo/argo-cd > tools/run_app/argocd.yaml
+
+
+check secret
+kubectl get secret gcr-json-key -n argocd -o yaml
+
+create secret
+# kubectl create secret docker-registry gcr-json-key --docker-server=us.gcr.io --docker-username=_json_key --docker-password="$(cat ./gke/tetscloud.json)" --docker-email=ariadi.ahmadd@gmail.com --namespace argocd

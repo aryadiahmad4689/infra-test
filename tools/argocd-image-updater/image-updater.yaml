@@ -1,4 +1,5 @@
 # -- Replica count for the deployment. It is not advised to run more than one replica.
+# helm install argocd-image-updater argo/argocd-image-updater -n argocd -f tools/argocd-image-updater/image-updater.yaml
 replicaCount: 1
 image:
   # -- Default image repository
@@ -12,7 +13,8 @@ image:
 updateStrategy:
   type: Recreate
 # -- ImagePullSecrets for the image updater deployment
-imagePullSecrets: []
+imagePullSecrets:
+- name: gcr-json-key
 # -- Global name (argocd-image-updater.name in _helpers.tpl) override
 nameOverride: ""
 # -- Global fullname (argocd-image-updater.fullname in _helpers.tpl) override
