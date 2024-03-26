@@ -11,7 +11,7 @@ import (
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	// Menulis respons "Hello, World!" ke browser
 
-	fmt.Fprintf(w, "Hello, World!"+myVariable)
+	fmt.Fprintf(w, "Hello, World!")
 }
 
 func main() {
