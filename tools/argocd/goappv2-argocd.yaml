@@ -3,6 +3,13 @@ kind: Application
 metadata:
   name: goapp-v2
   namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: gcr-safe-me-staging=asia-southeast2-docker.pkg.dev/ascendant-chain-336811/fazpass/safe-me-backend:latest
+    argocd-image-updater.argoproj.io/gcr-safe-me-staging.update-strategy: digest
+    argocd-image-updater.argoproj.io/gcr-safe-me-staging.ignore-tags: master, staging, dev
+    # argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    # argocd-image-updater.argoproj.io/write-back-method: git:repocreds
+    argocd-image-updater.argoproj.io/git-branch: master
 spec:
   project: default
   source:
