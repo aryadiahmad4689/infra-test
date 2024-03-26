@@ -28,4 +28,4 @@ jobs:
           image_name: ${{ env.REGISTRY_NAME }}
           dockerfile: ./golang_app/Dockerfile
           context: ./golang_app/
-          image_tag: v1.0.1
+          image_tag: latest,${{ steps.vars.outputs.sha_short }}

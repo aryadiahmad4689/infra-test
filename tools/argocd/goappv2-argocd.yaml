@@ -7,8 +7,6 @@ metadata:
     argocd-image-updater.argoproj.io/image-list: gcr-safe-me-staging=us.gcr.io/tetscloud/appv1:latest
     argocd-image-updater.argoproj.io/gcr-safe-me-staging.update-strategy: digest
     argocd-image-updater.argoproj.io/gcr-safe-me-staging.ignore-tags: staging, dev
-    # argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-    argocd-image-updater.argoproj.io/write-back-method: git:repocreds
     argocd-image-updater.argoproj.io/git-branch: master
 spec:
   project: default
