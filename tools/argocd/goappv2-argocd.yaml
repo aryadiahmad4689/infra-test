@@ -8,7 +8,7 @@ metadata:
     argocd-image-updater.argoproj.io/gcr-safe-me-staging.update-strategy: digest
     argocd-image-updater.argoproj.io/gcr-safe-me-staging.ignore-tags: master, staging, dev
     # argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
-    # argocd-image-updater.argoproj.io/write-back-method: git:repocreds
+    argocd-image-updater.argoproj.io/write-back-method: git:repocreds
     argocd-image-updater.argoproj.io/git-branch: master
 spec:
   project: default
