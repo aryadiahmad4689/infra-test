@@ -8,7 +8,7 @@ metadata:
     argocd-image-updater.argoproj.io/gcr-safe-me-staging.update-strategy: digest
     argocd-image-updater.argoproj.io/gcr-safe-me-staging.ignore-tags: staging, dev
     argocd-image-updater.argoproj.io/git-branch: master
-    argocd-image-updater.argoproj.io/gcr-safe-me-staging.pull-secret: gcr-json-key
+    argocd-image-updater.argoproj.io/gcr-safe-me-staging.pull-secret: argocd/gcr-json-key
 spec:
   project: default
   source:
