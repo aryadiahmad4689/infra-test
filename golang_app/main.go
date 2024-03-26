@@ -3,16 +3,22 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/spf13/viper"
 )
 
 // handler yang akan dipanggil setiap kali ada request ke "/"
 func helloWorldHandler(w http.ResponseWriter, r *http.Request) {
 	// Menulis respons "Hello, World!" ke browser
-	fmt.Fprintf(w, "Hello, World!")
+	myVariable := viper.GetString("DATA_OKE") // Menggunakan nama variable tanpa prefix jika Anda tidak menetapkan SetEnvPrefix
+	fmt.Println(myVariable)
+	fmt.Fprintf(w, "Hello, World!"+myVariable)
 }
 
 func main() {
 	// Mengatur handler untuk route "/"
+	viper.AutomaticEnv() // Membaca semua environment variables
+
 	http.HandleFunc("/", helloWorldHandler)
 
 	// Menjalankan server di port 8080
