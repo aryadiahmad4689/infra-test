@@ -12,6 +12,9 @@ image:
 service:
   port: 80
 
+ingress:
+  enabled: true
+
 # -- The deployment strategy to use to replace existing pods with new ones
 updateStrategy:
   type: Recreate
