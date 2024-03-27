@@ -18,6 +18,8 @@ helm install argocd argo/argo-cd --namespace argocd
 helm install argocd-staging argo/argo-cd --namespace argocd-staging
 helm install argocd-prod argo/argo-cd --namespace argocd-prod
 
+kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode; echo
+
 Show Values
 helm show values argo/argo-cd > tools/run_app/argocd.yaml
 
@@ -27,3 +29,5 @@ kubectl get secret gcr-json-key -n argocd -o yaml
 
 create secret
 # kubectl create secret docker-registry gcr-json-key --docker-server=us.gcr.io --docker-username=_json_key --docker-password="$(cat ./gke/tetscloud.json)" --docker-email=ariadi.ahmadd@gmail.com --namespace argocd
+
+kubectl logs -n argocd -l app.kubernetes.io/name=argocd-image-updater
