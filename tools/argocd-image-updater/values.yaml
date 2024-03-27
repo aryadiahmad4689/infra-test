@@ -1,5 +1,5 @@
 # -- Replica count for the deployment. It is not advised to run more than one replica.
-# helm upgrade --install argocd-image-updater argo/argocd-image-updater -n argocd -f tools/argocd-image-updater/image-updater.yaml
+# helm upgrade --install argocd-image-updater argo/argocd-image-updater -n argocd -f tools/argocd-image-updater/values.yaml
 replicaCount: 1
 image:
   # -- Default image repository
