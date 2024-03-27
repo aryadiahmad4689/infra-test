@@ -11,7 +11,7 @@ spec:
     path: tools/argocd-image-updater/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
     helm:
       valueFiles:
-        - "image-updater.yaml"
+        - "values.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: argocd  # Ganti dengan namespace target di kluster Anda
