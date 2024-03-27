@@ -1,22 +1,22 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: goapp-v1
+  name: argocd-image-updater
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
     targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
-    path: application/helm-gov1/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    path: tools/argocd-image-updater/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
     helm:
       valueFiles:
-        - "values.yaml"
+        - "image-updater.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: staging  # Ganti dengan namespace target di kluster Anda
+    namespace: argocd  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: {}
     
 
-# kubectl apply -f tools/argocd/goappv1-argocd.yaml
+# kubectl apply -f tools/argocd/exporter-argocd.yaml

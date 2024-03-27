@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"os"
+
 	"github.com/spf13/viper"
 )
 
@@ -19,6 +21,9 @@ func main() {
 	viper.AutomaticEnv() // Membaca semua environment variables
 
 	http.HandleFunc("/", helloWorldHandler)
+
+	fmt.Println("Testing", viper.GetString("DATA_OKE"))
+	fmt.Println("Testing", os.GetEnv("DATA_OKE"))
 
 	// Menjalankan server di port 8080
 	fmt.Println("Server is running on http://localhost:8099")
