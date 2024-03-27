@@ -31,3 +31,8 @@ create secret
 # kubectl create secret docker-registry gcr-json-key --docker-server=us.gcr.io --docker-username=_json_key --docker-password="$(cat ./gke/tetscloud.json)" --docker-email=ariadi.ahmadd@gmail.com --namespace argocd
 
 kubectl logs -n argocd -l app.kubernetes.io/name=argocd-image-updater
+
+# pull data dari helm
+helm pull argo/argocd-image-updater
+
+tar -xvzf argocd-image-updater-0.9.6.tgz

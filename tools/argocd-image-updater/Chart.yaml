@@ -1,24 +1,27 @@
+annotations:
+  artifacthub.io/changes: |
+    - kind: fixed
+      description: Properly quoting the config map values
+    - kind: fixed
+      description: Only adding a data field to argocd-image-updater-ssh-config when there's data to be added
+    - kind: changed
+      description: Only include config.argocd if config.applicationsAPIKind is set to 'argocd'
+  artifacthub.io/signKey: |
+    fingerprint: 2B8F22F57260EFA67BE1C5824B11F800CD9D2252
+    url: https://argoproj.github.io/argo-helm/pgp_keys.asc
 apiVersion: v2
+appVersion: v0.12.2
+description: A Helm chart for Argo CD Image Updater, a tool to automatically update
+  the container images of Kubernetes workloads which are managed by Argo CD
+home: https://github.com/argoproj-labs/argocd-image-updater
+icon: https://argocd-image-updater.readthedocs.io/en/stable/assets/logo.png
+keywords:
+- argoproj
+- argocd
+- gitops
+maintainers:
+- name: argoproj
+  url: https://argoproj.github.io/
 name: argocd-image-updater
-description: A Helm chart for Kubernetes
-
-# A chart can be either an 'application' or a 'library' chart.
-#
-# Application charts are a collection of templates that can be packaged into versioned archives
-# to be deployed.
-#
-# Library charts provide useful utilities or functions for the chart developer. They're included as
-# a dependency of application charts to inject those utilities and functions into the rendering
-# pipeline. Library charts do not define any templates and therefore cannot be deployed.
 type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.1.0
-
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-# It is recommended to use it with quotes.
-appVersion: "1.16.0"
+version: 0.9.6

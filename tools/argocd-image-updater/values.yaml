@@ -1,5 +1,4 @@
 # -- Replica count for the deployment. It is not advised to run more than one replica.
-# helm upgrade --install argocd-image-updater argo/argocd-image-updater -n argocd -f tools/argocd-image-updater/values.yaml
 replicaCount: 1
 image:
   # -- Default image repository
@@ -9,21 +8,11 @@ image:
   # -- Overrides the image tag whose default is the chart appVersion
   tag: ""
 
-service:
-  port: 80
-
-ingress:
-  enabled: false
-
-autoscalling:
-  enabled: false
-
 # -- The deployment strategy to use to replace existing pods with new ones
 updateStrategy:
   type: Recreate
 # -- ImagePullSecrets for the image updater deployment
-imagePullSecrets:
-- name: gcr-json-key
+imagePullSecrets: []
 # -- Global name (argocd-image-updater.name in _helpers.tpl) override
 nameOverride: ""
 # -- Global fullname (argocd-image-updater.fullname in _helpers.tpl) override
@@ -141,12 +130,7 @@ config:
   logLevel: "info"
 
   # -- Argo CD Image Updater registries list configuration. More information [here](https://argocd-image-updater.readthedocs.io/en/stable/configuration/registries/)
-  registries: 
-    - name: Google Container Registry
-      api_url: https://us.gcr.io
-      prefix: us.gcr.io
-      ping: no
-      credentials: pullsecret:argocd/gcr-json-key
+  registries: []
     # - name: Docker Hub
     #   api_url: https://registry-1.docker.io
     #   ping: yes
@@ -266,4 +250,3 @@ metrics:
     namespace: ""
     # -- Prometheus ServiceMonitor labels
     additionalLabels: {}
-
