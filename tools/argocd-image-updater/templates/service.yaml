@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "argocd-image-updater.fullname" . }}
+  labels:
+    {{- include "argocd-image-updater.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "argocd-image-updater.selectorLabels" . | nindent 4 }}
