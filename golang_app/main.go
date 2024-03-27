@@ -23,7 +23,7 @@ func main() {
 	http.HandleFunc("/", helloWorldHandler)
 
 	fmt.Println("Testing", viper.GetString("DATA_OKE"))
-	fmt.Println("Testing", os.GetEnv("DATA_OKE"))
+	fmt.Println("Testing", os.Getenv("DATA_OKE"))
 
 	// Menjalankan server di port 8080
 	fmt.Println("Server is running on http://localhost:8099")
