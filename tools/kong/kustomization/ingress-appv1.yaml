@@ -3,6 +3,7 @@ kind: Ingress
 metadata:
   name: appv1-ingress
   annotations: 
+    kubernetes.io/ingress.class: kong
 spec:
   rules:
   - host: coba-coba-aja.website
