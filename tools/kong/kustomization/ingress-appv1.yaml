@@ -1,10 +1,9 @@
 apiVersion: networking.k8s.io/v1
-kind: Ingress
+kind: IngressClass
 metadata:
   name: appv1-ingress
-  annotations:
-    kubernetes.io/ingress.class: "kong"
 spec:
+  controller: konghq.com/ingress-controller
   rules:
   - host: coba-coba-aja.website
     http:
