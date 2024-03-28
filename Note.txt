@@ -36,3 +36,6 @@ kubectl logs -n argocd -l app.kubernetes.io/name=argocd-image-updater
 helm pull argo/argocd-image-updater
 
 tar -xvzf argocd-image-updater-0.9.6.tgz
+
+create sertifikat tls cloudflar
+kubectl create secret tls cloudflare-tls --key certified/private.pem --cert certified/private.pem -n staging
