@@ -196,7 +196,7 @@ admin:
   # API of Kong outside the k8s cluster.
   ingress:
     # Enable/disable exposure using ingress.
-    enabled: true
+    enabled: false
     ingressClassName:
     # TLS secret name.
     # tls: kong-admin.example.com-tls
@@ -347,20 +347,24 @@ proxy:
   # to expose Kong outside the k8s cluster.
   ingress:
     # Enable/disable exposure using ingress.
-    enabled: false
-    ingressClassName:
+    enabled: true
+    ingressClassName: kong
     # To specify annotations or labels for the ingress, add them to the respective
     # "annotations" or "labels" dictionaries below.
-    annotations: {}
+    annotations: 
+        kubernetes.io/ingress.class: "kong"
     labels: {}
     # Ingress hostname
-    hostname:
-    # Ingress path (when used with hostname above).
-    path: /
-    # Each path in an Ingress is required to have a corresponding path type (when used with hostname above). (ImplementationSpecific/Exact/Prefix)
-    pathType: ImplementationSpecific
     # Ingress hosts. Use this instead of or in combination with hostname to specify multiple ingress host configurations
-    hosts: []
+    hosts: 
+      - host: coba-coba-aja.website
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: goapp-v2-helm-gov1
+                port: 80
     # - host: kong-proxy.example.com
     #   paths:
     #   # Ingress path.
