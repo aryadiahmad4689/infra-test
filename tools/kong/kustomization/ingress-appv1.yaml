@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: appv1-ingress
+  annotations:
+    kubernetes.io/ingress.class: "kong"
+spec:
+  rules:
+  - host: coba-coba-aja.website
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: goapp-v2-helm-gov1
+            port:
+              number: 80

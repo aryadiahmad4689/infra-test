@@ -12,6 +12,8 @@ spec:
     helm:
       valueFiles:
         - "values.yaml"
+    kustomize:
+      path: tools/kong/kustomize/
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kong  # Ganti dengan namespace target di kluster Anda
