@@ -552,9 +552,7 @@ ingressController:
   # namespaced-scoped Roles for each of them. The controller will still use a
   # ClusterRole for cluster-scoped resources.
   # Requires controller 2.0.0 or newer.
-  watchNamespaces: 
-    - staging
-    - kong
+  watchNamespaces: []
 
   # Specify Kong Ingress Controller configuration via environment variables
   env:
