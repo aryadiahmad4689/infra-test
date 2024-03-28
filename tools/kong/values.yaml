@@ -150,7 +150,7 @@ admin:
   # Enable creating a Kubernetes service for the admin API
   # Disabling this is recommended for most ingress controller configurations
   # Enterprise users that wish to use Kong Manager with the controller should enable this
-  enabled: false
+  enabled: true
   type: NodePort
   loadBalancerClass:
   # To specify annotations or labels for the admin service, add them to the respective
@@ -613,7 +613,7 @@ ingressController:
   # general properties
   livenessProbe:
     httpGet:
-      path: "/health"
+      path: "/healthz"
       port: 10254
       scheme: HTTP
     initialDelaySeconds: 5
@@ -623,7 +623,7 @@ ingressController:
     failureThreshold: 3
   readinessProbe:
     httpGet:
-      path: "/ready"
+      path: "/readyz"
       port: 10254
       scheme: HTTP
     initialDelaySeconds: 5
