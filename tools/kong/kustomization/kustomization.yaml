@@ -1,2 +1,2 @@
 resources:
-- ingress.yaml
+- ingress-appv1.yaml
