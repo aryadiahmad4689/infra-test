@@ -613,7 +613,7 @@ ingressController:
   # general properties
   livenessProbe:
     httpGet:
-      path: "/healthz"
+      path: "/health"
       port: 10254
       scheme: HTTP
     initialDelaySeconds: 5
@@ -623,7 +623,7 @@ ingressController:
     failureThreshold: 3
   readinessProbe:
     httpGet:
-      path: "/readyz"
+      path: "/ready"
       port: 10254
       scheme: HTTP
     initialDelaySeconds: 5
