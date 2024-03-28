@@ -15,4 +15,4 @@ spec:
           service:
             name: goapp-v2-helm-gov1
             port:
-              number: 80
+              number: 8099
