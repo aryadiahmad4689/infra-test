@@ -2,14 +2,10 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: appv1-ingress
-  namespace: argocd  # Pas
+  namespace: staging  # Pas
   annotations: 
     kubernetes.io/ingress.class: kong
 spec:
-  tls:
-  - hosts:
-    - coba-coba-aja.website
-    secretName: cloudflare-tls
   rules:
   - host: coba-coba-aja.website
     http:
@@ -18,6 +14,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: argocd-server
+            name: goapp-v2-helm-gov1
             port:
-              number: 80
+              number: 8099
