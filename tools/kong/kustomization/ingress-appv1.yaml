@@ -8,10 +8,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - blog.coba-coba-aja.website
+    - coba-coba-aja.website
     secretName: cloudflare-tls
   rules:
-  - host: blog.coba-coba-aja.website
+  - host: coba-coba-aja.website
     http:
       paths:
       - path: /
