@@ -18,6 +18,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: goapp-v2-helm-gov1
+            name: argocd-server
             port:
-              number: 8099
+              number: 80
