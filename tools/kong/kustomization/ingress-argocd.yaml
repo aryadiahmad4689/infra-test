@@ -6,10 +6,10 @@ metadata:
   annotations: 
     kubernetes.io/ingress.class: kong
 spec:
-  tls:
-  - hosts:
-    - argocd.coba-coba-aja.website
-    secretName: cloudflare-argo
+  # tls:
+  # - hosts:
+  #   - argocd.coba-coba-aja.website
+  #   secretName: cloudflare-argo
   rules:
   - host: argocd.coba-coba-aja.website
     http:
