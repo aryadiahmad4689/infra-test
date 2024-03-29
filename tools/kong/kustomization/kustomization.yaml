@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
 - ingress-appv1.yaml
-- ingress-argocd.yaml
+# - ingress-argocd.yaml
