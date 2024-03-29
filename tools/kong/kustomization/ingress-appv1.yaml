@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: appv1-ingress
-  namespace: staging  # Pas
+  namespace: argocd  # Pas
   annotations: 
     kubernetes.io/ingress.class: kong
 spec:
