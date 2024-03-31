@@ -775,13 +775,13 @@ serverFiles:
           module: [http_2xx]  # Sesuai dengan nama modul yang Anda definisikan
         static_configs:
           - targets:
-              - http://goapp-v2-helm-gov1.argocd.svc.cluster.local/
+              - http://goapp-v2-helm-gov1.staging.svc.cluster.local/
               # Tambahkan target lainnya sesuai kebutuhan
         relabel_configs:
           - source_labels: [__address__]
             target_label: __param_target
           - target_label: __address__
-            replacement: exporter-blackbox-exporter.argocd.svc.cluster.local:9115  # Alamat tempat Blackbox Exporter berjalan
+            replacement: exporter-blackbox-exporter.exporter.svc.cluster.local:9115  # Alamat tempat Blackbox Exporter berjalan
           - source_labels: [__param_target]
             target_label: instance
 
