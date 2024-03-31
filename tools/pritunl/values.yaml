@@ -116,6 +116,7 @@ volumes:
 volumeMounts: 
   - name: pritunl-conf
     mountPath: "/etc/pritunl.conf"
+    subPath: pritunl.conf
   - name: pritunl-data
     mountPath: "/var/lib/pritunl"
   - name: mongodb-data
