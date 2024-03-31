@@ -30,14 +30,7 @@ spec:
       serviceAccountName: {{ include "pritunl.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
-      initContainers: # Ini adalah bagian yang ditambahkan untuk Init Container
-        - name: pritunl-init
-          image: busybox # Gunakan image yang sesuai untuk kebutuhan inisialisasi
-          command: ['sh', '-c', 'rm -rf /etc/pritunl.conf && echo "some initial pritunl configuration" > /etc/pritunl.conf']
-          volumeMounts:
-            - name: pritunl-conf
-              mountPath: "/etc/pritunl.conf"
-              subPath: pritunl.conf
+      
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
