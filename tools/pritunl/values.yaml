@@ -88,6 +88,10 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+initContainers:
+  enabled: true
+  image: busybox
+  command: ['sh', '-c', 'echo "some initial pritunl configuration" > /etc/pritunl.conf']
 
 pvcs:
   - name: pritunl-conf-pvc
