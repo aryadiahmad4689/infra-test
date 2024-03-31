@@ -3,9 +3,6 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# export POD_NAME=$(kubectl get pods --namespace monitoring -l "app.kubernetes.io/name=prometheus,app.kubernetes.io/instance=prometheus" -o jsonpath="{.items[0].metadata.name}")
-# kubectl --namespace monitoring port-forward $POD_NAME 9090
-# helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring -f tools/prometheus/values.yaml
 rbac:
   create: true
 
@@ -63,7 +60,7 @@ configmapReload:
     ##
     image:
       repository: quay.io/prometheus-operator/prometheus-config-reloader
-      tag: v0.71.2
+      tag: v0.72.0
       # When digest is set to a non-empty value, images will be pulled by digest (regardless of tag value).
       digest: ""
       pullPolicy: IfNotPresent
@@ -399,6 +396,18 @@ server:
   ## Pod affinity
   ##
   affinity: {}
+
+  ## Pod anti-affinity can prevent the scheduler from placing Prometheus server replicas on the same node.
+  ## The value "soft" means that the scheduler should *prefer* to not schedule two replica pods onto the same node but no guarantee is provided.
+  ## The value "hard" means that the scheduler is *required* to not schedule two replica pods onto the same node.
+  ## The default value "" will disable pod anti-affinity so that no anti-affinity rules will be configured (unless set in `server.affinity`).
+  ##
+  podAntiAffinity: ""
+
+  ## If anti-affinity is enabled sets the topologyKey to use for anti-affinity.
+  ## This can be changed to, for example, failure-domain.beta.kubernetes.io/zone
+  ##
+  podAntiAffinityTopologyKey: kubernetes.io/hostname
 
   ## Pod topology spread constraints
   ## ref. https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
@@ -753,7 +762,7 @@ serverFiles:
         static_configs:
           - targets:
             - localhost:9090
-                
+            
       - job_name: kube-state-metrics
         metrics_path: /metrics
         static_configs:
@@ -766,7 +775,7 @@ serverFiles:
           module: [http_2xx]  # Sesuai dengan nama modul yang Anda definisikan
         static_configs:
           - targets:
-              - http://goapp-v1-helm-gov1.argocd.svc.cluster.local/
+              - http://goapp-v2-helm-gov1.argocd.svc.cluster.local/
               # Tambahkan target lainnya sesuai kebutuhan
         relabel_configs:
           - source_labels: [__address__]
@@ -775,6 +784,7 @@ serverFiles:
             replacement: exporter-blackbox-exporter.argocd.svc.cluster.local:9115  # Alamat tempat Blackbox Exporter berjalan
           - source_labels: [__param_target]
             target_label: instance
+
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.
@@ -1279,4 +1289,3 @@ prometheus-pushgateway:
   # Optional service annotations
   serviceAnnotations:
     prometheus.io/probe: pushgateway
-
