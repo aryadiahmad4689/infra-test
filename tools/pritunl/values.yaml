@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: jippi/docker-pritunl
+  repository: ghcr.io/jippi/docker-pritunl
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -88,6 +88,14 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
+
+pvcs:
+  - name: pritunl-conf-pvc
+    size: 1Gi
+  - name: pritunl-data-pvc
+    size: 5Gi
+  - name: mongodb-data-pvc
+    size: 8Gi
 # Additional volumes on the output Deployment definition.
 volumes:
   - name: pritunl-conf
@@ -99,6 +107,7 @@ volumes:
   - name: mongodb-data
     persistentVolumeClaim:
       claimName: mongodb-data-pvc
+
 # - name: foo
 #   secret:
 #     secretName: mysecret
