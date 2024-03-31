@@ -775,7 +775,9 @@ serverFiles:
           module: [http_2xx]  # Sesuai dengan nama modul yang Anda definisikan
         static_configs:
           - targets:
-              - http://goapp-v2-helm-gov1.staging.svc.cluster.local/
+              - https://coba-coba-aja.website/
+              - https://grafana.coba-coba-aja.website/
+              - https://argocd.coba-coba-aja.website/
               # Tambahkan target lainnya sesuai kebutuhan
         relabel_configs:
           - source_labels: [__address__]
