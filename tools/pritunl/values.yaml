@@ -91,7 +91,7 @@ autoscaling:
 initContainers:
   enabled: true
   image: busybox
-  command: ['sh', '-c', 'echo "some initial pritunl configuration" > /etc/pritunl.conf']
+  command: ['sh', '-c', 'rm -rf /etc/pritunl.conf && echo "some initial pritunl configuration" > /etc/pritunl.conf']
 
 pvcs:
   - name: pritunl-conf-pvc
@@ -121,6 +121,7 @@ volumes:
 volumeMounts: 
   - name: pritunl-conf
     mountPath: "/etc/pritunl.conf"
+    subPath: pritunl.conf
   - name: pritunl-data
     mountPath: "/var/lib/pritunl"
   - name: mongodb-data
