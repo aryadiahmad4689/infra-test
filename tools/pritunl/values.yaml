@@ -89,7 +89,16 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
+  - name: pritunl-conf
+    persistentVolumeClaim:
+      claimName: pritunl-conf-pvc
+  - name: pritunl-data
+    persistentVolumeClaim:
+      claimName: pritunl-data-pvc
+  - name: mongodb-data
+    persistentVolumeClaim:
+      claimName: mongodb-data-pvc
 # - name: foo
 #   secret:
 #     secretName: mysecret
