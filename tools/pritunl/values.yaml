@@ -102,10 +102,12 @@ volumes:
       name: pritunl-config
   - name: pritunl-data
     hostPath:
-      path: ./data/pritunl
+      path: /var/lib/pritunl
+      type: DirectoryOrCreate
   - name: mongodb-data
     hostPath:
-      path: ./data/mongodb
+      path: /var/lib/mongodb
+      type: DirectoryOrCreate
 
 # - name: foo
 #   secret:
