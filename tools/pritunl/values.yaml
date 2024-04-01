@@ -98,8 +98,8 @@ autoscaling:
 # Additional volumes on the output Deployment definition.
 volumes:
   - name: pritunl-conf
-    hostPath:
-      path: ./data/pritunl.conf
+    configMap:
+      name: pritunl-config
   - name: pritunl-data
     hostPath:
       path: ./data/pritunl
