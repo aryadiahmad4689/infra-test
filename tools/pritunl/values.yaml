@@ -97,9 +97,9 @@ autoscaling:
 #     size: 8Gi
 # Additional volumes on the output Deployment definition.
 volumes:
-  - name: pritunl-conf
-    configMap:
-      name: pritunl-config
+  # - name: pritunl-conf
+  #   configMap:
+  #     name: pritunl-config
   - name: pritunl-data
     hostPath:
       path: /var/lib/pritunl
@@ -116,9 +116,9 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts:
-  - name: pritunl-conf
-    mountPath: /etc/pritunl.conf
-    subPath: pritunl.conf
+  # - name: pritunl-conf
+  #   mountPath: /etc/pritunl.conf
+  #   subPath: pritunl.conf
   - name: pritunl-data
     mountPath: /var/lib/pritunl
   - name: mongodb-data
