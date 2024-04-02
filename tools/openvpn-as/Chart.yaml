@@ -1,0 +1,15 @@
+apiVersion: v2
+appVersion: version-2.8.6-916f8e7d-ubuntu18
+description: A Helm chart for Kubernetes
+home: https://github.com/stenic/helm-charts/tree/master/charts/openvpn-as
+icon: https://raw.githubusercontent.com/stenic/helm-charts/master/img/openvpn-as-icon.png
+maintainers:
+- email: dries@stenic.io
+  name: Stenic
+name: openvpn-as
+sources:
+- https://github.com/stenic/helm-charts/tree/master/charts/openvpn-as
+- https://github.com/linuxserver/docker-openvpn-as
+- https://openvpn.net/vpn-server/
+type: application
+version: 0.1.9
