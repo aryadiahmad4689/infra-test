@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vault
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
+    targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
+    path: tools/vault/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    helm:
+      valueFiles:
+        - "values.yaml"
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: hashicorp  # Ganti dengan namespace target di kluster Anda
+  syncPolicy:
+    automated: 
+      prune: true  # Menghapus sumber daya yang tidak lagi ada dalam repositori
+      selfHeal: true
+      
+    
+
+# kubectl apply -f tools/argocd/goappv1-argocd.yaml
