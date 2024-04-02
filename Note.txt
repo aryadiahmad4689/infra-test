@@ -37,7 +37,7 @@ helm pull argo/argocd-image-updater
 
 tar -xvzf argocd-image-updater-0.9.6.tgz
 
-create sertifikat tls cloudflar
+create sertifikat tls cloudflare
 kubectl create secret tls grafana-tls --key certified/private.pem --cert certified/origin.pem -n monitoring
 
 # lihat kalau ada error di ingress controller kong
