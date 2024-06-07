@@ -21,8 +21,8 @@ roles:
   - remote_cluster_client
   - transform
 
-replicas: 2
-minimumMasterNodes: 2
+replicas: 1
+minimumMasterNodes: 1
 
 esMajorVersion: ""
 
@@ -239,7 +239,7 @@ readinessProbe:
   timeoutSeconds: 10
 
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/cluster-health.html#request-params wait_for_status
-clusterHealthCheckParams: "wait_for_status=green&timeout=1s"
+clusterHealthCheckParams: "wait_for_status=green&timeout=5s"
 
 ## Use an alternate scheduler.
 ## ref: https://kubernetes.io/docs/tasks/administer-cluster/configure-multiple-schedulers/
@@ -354,3 +354,4 @@ networkPolicy:
 
 tests:
   enabled: true
+
