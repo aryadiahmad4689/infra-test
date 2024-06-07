@@ -362,6 +362,12 @@ initScripts:
     init: |
       #!/bin/bash
       set -e
+      # Tunggu hingga Elasticsearch siap
+      until curl -s "http://elasticsearch-master:9200/_cluster/health?wait_for_status=yellow&timeout=60s"; do
+        echo "Waiting for Elasticsearch to be ready..."
+        sleep 10
+      done
+      # Buat indeks setelah Elasticsearch siap
       curl -X PUT "http://elasticsearch-master:9200/report" -H 'Content-Type: application/json' -d'
       {
         "settings": {
