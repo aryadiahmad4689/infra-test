@@ -4,7 +4,7 @@ nodeGroup: "master"
 
 # The service that non master groups will try to connect to when joining the cluster
 # This should be set to clusterName + "-" + nodeGroup for your master group
-masterService: ""
+masterService: "elasticsearch-master-headless"
 
 # Elasticsearch roles that will be applied to this nodeGroup
 # These will be set as environment variables. E.g. node.roles=master
@@ -181,6 +181,19 @@ nodeAffinity: {}
 # The default is to deploy all pods serially. By setting this to parallel all pods are started at
 # the same time when bootstrapping the cluster
 podManagementPolicy: "Parallel"
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+    - weight: 100
+      podAffinityTerm:
+        labelSelector:
+          matchExpressions:
+          - key: app
+            operator: In
+            values:
+            - elasticsearch
+        topologyKey: "kubernetes.io/hostname"
 
 # The environment variables injected by service links are not used, but can lead to slow Elasticsearch boot times when
 # there are many services in the current namespace.
