@@ -697,7 +697,7 @@ server:
     # be given a Cluster IP address, set to None to disable.  When disabled
     # Kubernetes will create a "headless" service.  Headless services can be
     # used to communicate with pods directly through DNS instead of a round-robin
-    # load balancer.
+    # load balancer. 
     # clusterIP: None
 
     # Configures the service type for the main Vault service.  Can be ClusterIP

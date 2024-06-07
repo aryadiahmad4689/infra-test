@@ -37,10 +37,9 @@ hostAliases: []
 #  - "foo.local"
 #  - "bar.local"
 
-image:
-  repository: "docker.elastic.co/kibana/kibana"
-  tag: "8.5.1"
-  pullPolicy: "IfNotPresent"
+image: "docker.elastic.co/kibana/kibana"
+imageTag: "8.5.1"
+imagePullPolicy: "IfNotPresent"
 
 # additionals labels
 labels: {}
@@ -52,11 +51,11 @@ podAnnotations: {}
 
 resources:
   requests:
-    cpu: "100m"
-    memory: "256Mi"
+    cpu: "1000m"
+    memory: "2Gi"
   limits:
-    cpu: "100m"
-    memory: "256Mi"
+    cpu: "1000m"
+    memory: "2Gi"
 
 protocol: http
 
@@ -84,9 +83,7 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
-serviceAccount:
-  create: true  # atau false, tergantung pada kebutuhan Anda
-
+serviceAccount: ""
 
 # Whether or not to automount the service account token in the pod. Normally, Kibana does not need this
 automountToken: true
@@ -121,10 +118,6 @@ extraInitContainers: []
 
 updateStrategy:
   type: "Recreate"
-
-autoscaling:
-  enabled: false  # Atau true, tergantung pada keinginan Anda untuk mengaktifkan autoscaling
-
 
 service:
   type: ClusterIP
@@ -180,4 +173,3 @@ lifecycle: {}
 # postStart:
 #   exec:
 #     command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
-

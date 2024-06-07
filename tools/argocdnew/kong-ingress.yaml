@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kong-ingress
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
+    targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
+    path: tools/kong/kustomization/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: kong  # Ganti dengan namespace target di kluster Anda
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
+    
+
+# kubectl apply -f tools/argocd/exporter-argocd.yaml

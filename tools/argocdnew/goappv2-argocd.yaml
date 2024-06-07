@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: goapp-v2
+  namespace: argocd
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: gcr-safe-me-staging=us.gcr.io/tetscloud/appv1:latest
+    argocd-image-updater.argoproj.io/gcr-safe-me-staging.update-strategy: digest
+    argocd-image-updater.argoproj.io/gcr-safe-me-staging.ignore-tags: staging, dev
+    argocd-image-updater.argoproj.io/git-branch: master
+    argocd-image-updater.argoproj.io/gcr-safe-me-staging.pull-secret: argocd/gcr-json-key
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
+    targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
+    path: application/helm-app2/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    helm:
+      valueFiles:
+        - "values.yaml"
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: staging  # Ganti dengan namespace target di kluster Anda
+  syncPolicy:
+    automated: {}
+    
+
+# kubectl apply -f tools/argocd/goappv1-argocd.yaml
