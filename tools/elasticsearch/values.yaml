@@ -2579,7 +2579,7 @@ metrics:
 volumePermissions:
   ## @param volumePermissions.enabled Enable init container that changes volume permissions in the data directory (for cases where the default k8s `runAsUser` and `fsUser` values do not work)
   ##
-  enabled: false
+  enabled: true
   ## @param volumePermissions.image.registry [default: REGISTRY_NAME] Init container volume-permissions image registry
   ## @param volumePermissions.image.repository [default: REPOSITORY_NAME/os-shell] Init container volume-permissions image name
   ## @skip volumePermissions.image.tag Init container volume-permissions image tag
