@@ -1,3 +1,44 @@
+single node elastic
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: elasticsearch
+spec:
+  serviceName: "elasticsearch"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: elasticsearch
+  template:
+    metadata:
+      labels:
+        app: elasticsearch
+    spec:
+      containers:
+      - name: elasticsearch
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.10.0
+        ports:
+        - containerPort: 9200
+          name: http
+        - containerPort: 9300
+          name: transport
+        volumeMounts:
+        - name: data
+          mountPath: /usr/share/elasticsearch/data
+        env:
+        - name: discovery.type
+          value: single-node
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+
+more node elastic
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -49,13 +90,6 @@ spec:
           value: "true"
         - name: ES_JAVA_OPTS
           value: "-Xms512m -Xmx512m"
-      volumeMounts:
-      - name: data
-        mountPath: /usr/share/elasticsearch/data
-        securityContext:
-          capabilities:
-            add:
-              - IPC_LOCK
   volumeClaimTemplates:
   - metadata:
       name: data
