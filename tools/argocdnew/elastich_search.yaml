@@ -8,7 +8,10 @@ spec:
   source:
     repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
     targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
-    path: tools/elastic_manual/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    path: tools/elasticsearch/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
+    helm:
+      valueFiles:
+        - "values.yaml"
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: elk  # Ganti dengan namespace target di kluster Anda
