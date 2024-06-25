@@ -1,34 +1,62 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
+apiVersion: apps/v1
+kind: StatefulSet
 metadata:
   name: postgres
-  namespace: argocd
+  namespace: db
 spec:
-  project: default
-  source:
-    repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
-    targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
-    path: tools/postgres_manual/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: db  # Ganti dengan namespace target di kluster Anda
-  syncPolicy:
-    automated: 
-      prune: true  # Menghapus sumber daya yang tidak lagi ada dalam repositori
-      selfHeal: true
-    syncOptions:     # Sync options which modifies sync behavior
-    - Validate=false # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
-    - CreateNamespace=true # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
-    - PrunePropagationPolicy=foreground # Supported policies are background, foreground and orphan.
-    - PruneLast=true # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
-    # The retry feature is available since v1.7
-    retry:
-      limit: 5 # number of failed sync attempt retries; unlimited number of attempts if less than 0
-      backoff:
-        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
-        factor: 2 # a factor to multiply the base duration after each failed retry
-        maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
-      
-    
-
-# kubectl apply -f tools/argocd/goappv1-argocd.yaml
+  serviceName: "postgres"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      initContainers:
+      - name: init-config
+        image: postgres:latest
+        securityContext:
+          runAsUser: 999  # UID untuk pengguna postgres
+        command:
+        - sh
+        - -c
+        - |
+          echo "host all all 0.0.0.0/0 trust" >> /var/lib/postgresql/data/pg_hba.conf
+          echo "wal_level = logical" >> /var/lib/postgresql/data/postgresql.conf
+          echo "max_replication_slots = 4" >> /var/lib/postgresql/data/postgresql.conf
+          echo "max_wal_senders = 4" >> /var/lib/postgresql/data/postgresql.conf
+          pg_ctl -D /var/lib/postgresql/data reload
+          until pg_isready -h localhost -p 5432; do
+            echo "Waiting for PostgreSQL to be ready..."
+            sleep 2
+          done
+          psql -U postgres -d db_test -c "ALTER ROLE postgres WITH REPLICATION;"
+          psql -U postgres -d db_test -c "SELECT * FROM pg_create_logical_replication_slot('debezium_slot', 'pgoutput');"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      containers:
+      - name: postgres
+        image: postgres:latest
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_DB
+          value: "db_test"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
