@@ -1128,7 +1128,7 @@ broker:
     runAsGroup: 1001
     runAsNonRoot: true
     allowPrivilegeEscalation: false
-    readOnlyRootFilesystem: true
+    readOnlyRootFilesystem: false
     capabilities:
       drop: ["ALL"]
   ## @param broker.automountServiceAccountToken Mount Service Account token in pod
