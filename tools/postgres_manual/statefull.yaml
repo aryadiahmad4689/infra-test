@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  serviceName: "postgres"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      initContainers:
+      - name: init-config
+        image: postgres:latest
+        command:
+        - sh
+        - -c
+        - |
+          echo "host all all 0.0.0.0/0 trust" >> /var/lib/postgresql/data/pg_hba.conf
+          echo "wal_level = logical" >> /var/lib/postgresql/data/postgresql.conf
+          echo "max_replication_slots = 4" >> /var/lib/postgresql/data/postgresql.conf
+          echo "max_wal_senders = 4" >> /var/lib/postgresql/data/postgresql.conf
+          pg_ctl reload
+          psql -U postgres -d db_test -c "ALTER ROLE postgres WITH REPLICATION;"
+          psql -U postgres -d db_test -c "SELECT * FROM pg_create_logical_replication_slot('debezium_slot', 'pgoutput');"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+      containers:
+      - name: postgres
+        image: postgres:latest
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "postgres"
+        - name: POSTGRES_DB
+          value: "db_test"
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi

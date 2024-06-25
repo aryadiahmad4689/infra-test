@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: register-postgres
+data:
+  register-postgres.json: |
+    {
+      "name": "postgres-connector",
+      "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "database.hostname": "postgres",
+        "database.port": "5432",
+        "database.user": "postgres",
+        "database.password": "postgres",
+        "database.dbname": "db_test",
+        "database.server.name": "dbserver1",
+        "table.include.list": "public.logs",
+        "plugin.name": "pgoutput"
+      }
+    }
