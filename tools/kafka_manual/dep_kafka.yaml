@@ -1,12 +1,32 @@
-# zookeeper-service.yaml
-apiVersion: v1
-kind: Service
+# kafka-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: zookeeper
-  namespace: kafka-manual
+  name: kafka
+  namespace: kafka
 spec:
-  ports:
-    - port: 2181
-      targetPort: 2181
+  replicas: 1
   selector:
-    app: zookeeper
+    matchLabels:
+      app: kafka
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      containers:
+        - name: kafka
+          image: confluentinc/cp-kafka:latest
+          ports:
+            - containerPort: 9092
+          env:
+            - name: KAFKA_ZOOKEEPER_CONNECT
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_ZOOKEEPER_CONNECT
+            - name: KAFKA_ADVERTISED_LISTENERS
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_ADVERTISED_LISTENERS
