@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: kafka
-          image: apache/kafka:3.7.0
+          image: wurstmeister/kafka
           ports:
             - containerPort: 9092
           env:
@@ -35,3 +35,28 @@ spec:
                 configMapKeyRef:
                   name: kafka-config
                   key: KAFKA_LISTENERS
+            - name: KAFKA_BROKER_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_BROKER_ID
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+            - name: KAFKA_LOG_FLUSH_INTERVAL_MESSAGES
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_LOG_FLUSH_INTERVAL_MESSAGES
+            - name: KAFKA_LOG_RETENTION_HOURS
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_LOG_RETENTION_HOURS
+            - name: KAFKA_LOG_SEGMENT_BYTES
+              valueFrom:
+                configMapKeyRef:
+                  name: kafka-config
+                  key: KAFKA_LOG_SEGMENT_BYTES
