@@ -14,29 +14,6 @@ spec:
       labels:
         app: postgres
     spec:
-      initContainers:
-      - name: init-config
-        image: postgres:latest
-        securityContext:
-          runAsUser: 999  # UID untuk pengguna postgres
-        command:
-        - sh
-        - -c
-        - |
-          echo "host all all 0.0.0.0/0 trust" >> /var/lib/postgresql/data/pg_hba.conf
-          echo "wal_level = logical" >> /var/lib/postgresql/data/postgresql.conf
-          echo "max_replication_slots = 4" >> /var/lib/postgresql/data/postgresql.conf
-          echo "max_wal_senders = 4" >> /var/lib/postgresql/data/postgresql.conf
-          pg_ctl -D /var/lib/postgresql/data reload
-          until pg_isready -h localhost -p 5432; do
-            echo "Waiting for PostgreSQL to be ready..."
-            sleep 2
-          done
-          psql -U postgres -d db_test -c "ALTER ROLE postgres WITH REPLICATION;"
-          psql -U postgres -d db_test -c "SELECT * FROM pg_create_logical_replication_slot('debezium_slot', 'pgoutput');"
-        volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
       containers:
       - name: postgres
         image: postgres:latest
