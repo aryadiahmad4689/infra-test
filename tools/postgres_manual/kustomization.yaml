@@ -6,3 +6,4 @@ resources:
   - postgres-pv.yaml
   - statefull.yaml
   - svc.yaml
+  - config.yaml

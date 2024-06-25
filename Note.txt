@@ -20,6 +20,8 @@ helm install argocd-prod argo/argo-cd --namespace argocd-prod
 
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode; echo
 
+kubectl apply -f tools/run_app/staging_argocd.yaml
+
 Show Values
 helm show values argo/argo-cd > tools/run_app/argocd.yaml
 

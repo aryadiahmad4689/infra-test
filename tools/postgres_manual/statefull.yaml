@@ -29,6 +29,9 @@ spec:
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
+        - name: config-volume
+          mountPath: /etc/postgresql/postgresql.conf
+          subPath: postgresql.conf
   volumeClaimTemplates:
   - metadata:
       name: postgres-storage
@@ -37,3 +40,10 @@ spec:
       resources:
         requests:
           storage: 1Gi
+  volumes:
+  - name: config-volume
+    configMap:
+      name: postgres-config
+      items:
+        - key: postgresql.conf
+          path: postgresql.conf

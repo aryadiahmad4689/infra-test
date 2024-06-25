@@ -11,8 +11,8 @@ data:
         "database.hostname": "postgres",
         "database.port": "5432",
         "database.user": "postgres",
-        "database.password": "postgres",
-        "database.dbname": "db_test",
+        "database.password": "your_password_here",
+        "database.dbname": "mydb",
         "database.server.name": "dbserver1",
         "table.include.list": "public.logs",
         "plugin.name": "pgoutput"
