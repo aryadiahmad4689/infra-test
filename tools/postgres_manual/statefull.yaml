@@ -14,21 +14,6 @@ spec:
       labels:
         app: postgres
     spec:
-      initContainers:
-      - name: init-config
-        image: postgres:latest
-        command:
-        - sh
-        - -c
-        - |
-          # Check if the directory is empty or not
-          if [ "$(ls -A /var/lib/postgresql/data)" ]; then
-            echo "Directory is not empty, skipping initialization.";
-          else
-            echo "Initializing new database.";
-        volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
       containers:
       - name: postgres
         image: postgres:latest
