@@ -4,7 +4,7 @@ metadata:
   name: register-postgres
 data:
   register-postgres.json: |
-    {
+     {
       "name": "postgres-connector",
       "config": {
         "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
@@ -14,7 +14,7 @@ data:
         "database.password": "your_password_here",
         "database.dbname": "mydb",
         "database.server.name": "dbserver1",
-        "table.include.list": "public.logs",
+        "table.include.list": "public.users",
         "plugin.name": "pgoutput"
-      }
-    }
+       }
+     }
