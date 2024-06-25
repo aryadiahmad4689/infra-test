@@ -1,0 +1,12 @@
+# zookeeper-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: zookeeper
+  namespace: kafka-manual
+spec:
+  ports:
+    - port: 2181
+      targetPort: 2181
+  selector:
+    app: zookeeper
