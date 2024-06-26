@@ -5,16 +5,26 @@ metadata:
 data:
   register-postgres.json: |
      {
-      "name": "postgres-connector",
-      "config": {
-        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
-        "database.hostname": "postgres",
-        "database.port": "5432",
-        "database.user": "postgres",
-        "database.password": "your_password_here",
-        "database.dbname": "mydb",
-        "database.server.name": "dbserver1",
-        "table.include.list": "public.users",
-        "plugin.name": "pgoutput"
-       }
-     }
+        "name": "inventory-connector",
+        "config": {
+          "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+          "database.hostname": "postgres.db.svc.cluster.local",
+          "database.port": "5432",
+          "database.user": "postgres",
+          "database.password": "your_password_here",
+          "database.dbname": "mydb",
+          "database.server.name": "dbserver1",
+          "table.include.list": "public.users",
+          "plugin.name": "pgoutput",
+          "database.history.kafka.bootstrap.servers": "kafka-service.kafka-manual.svc.cluster.local:9092",
+          "database.history.kafka.topic": "schema-changes.inventory",
+          "database.history.kafka.topic.auto.create": "true",
+          "transforms": "unwrap",
+          "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+          "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+          "key.converter.schemas.enable": false,
+          "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+          "value.converter.schemas.enable": false
+        }
+      }
+
