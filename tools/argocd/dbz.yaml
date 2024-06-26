@@ -8,10 +8,10 @@ spec:
   source:
     repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
     targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
-    path: tools/kafka_manual/ #ini adalah path tempat helm chart anda untuk menjalankan aplikasi kalian
+    path: tools/dbzeium/ #ini adalah path tempat helm chart anda untun menjalankan aplikasi kalian
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: kafka-manual  # Ganti dengan namespace target di kluster Anda
+    namespace: dbz  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: 
       prune: true  # Menghapus sumber daya yang tidak lagi ada dalam repositori
