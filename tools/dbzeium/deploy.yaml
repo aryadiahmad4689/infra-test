@@ -13,6 +13,13 @@ spec:
       labels:
         app: debezium
     spec:
+      initContainers:
+      - name: register-connector
+        image: curlimages/curl:7.73.0
+        command: ['sh', '-c', 'until curl -s -o /dev/null -w "%{http_code}" http://localhost:8083/connectors/ -d @/register/register-postgres.json -X POST -H "Content-Type: application/json" | grep -q "201"; do echo waiting for connect; sleep 5; done']
+        volumeMounts:
+        - name: register-connector
+          mountPath: /register
       containers:
       - name: debezium
         image: debezium/connect:latest
@@ -30,16 +37,10 @@ spec:
         volumeMounts:
         - name: register-connector
           mountPath: /register
-      - name: register-connector
-        image: curlimages/curl:7.73.0
-        command: ['sh', '-c', 'until curl -s -o /dev/null -w "%{http_code}" http://localhost:8083/connectors/ -d @/register/register-postgres.json -X POST -H "Content-Type: application/json" | grep -q "201"; do echo waiting for connect; sleep 5; done']
-        volumeMounts:
-        - name: register-connector
-          mountPath: /register
-      volumes:
-      - name: register-connector
-        configMap:
-          name: register-postgres
-          items:
-            - key: register-postgres.json
-              path: register-postgres.json
+  volumes:
+  - name: register-connector
+    configMap:
+      name: register-postgres
+      items:
+        - key: register-postgres.json
+          path: register-postgres.json
