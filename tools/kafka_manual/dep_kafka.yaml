@@ -24,39 +24,46 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_ZOOKEEPER_CONNECT
+                  key: zookeeper.connect
             - name: KAFKA_ADVERTISED_LISTENERS
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_ADVERTISED_LISTENERS
+                  key: advertised.listeners
             - name: KAFKA_LISTENERS
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_LISTENERS
+                  key: listeners
             - name: KAFKA_BROKER_ID
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_BROKER_ID
+                  key: broker.id
             - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+                  key: offsets.topic.replication.factor
             - name: KAFKA_LOG_FLUSH_INTERVAL_MESSAGES
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_LOG_FLUSH_INTERVAL_MESSAGES
+                  key: log.flush.interval.messages
             - name: KAFKA_LOG_RETENTION_HOURS
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_LOG_RETENTION_HOURS
+                  key: log.retention.hours
             - name: KAFKA_LOG_SEGMENT_BYTES
               valueFrom:
                 configMapKeyRef:
                   name: kafka-config
-                  key: KAFKA_LOG_SEGMENT_BYTES
+                  key: log.segment.bytes
+          volumeMounts:
+            - name: config-volume
+              mountPath: /opt/kafka/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: kafka-config
