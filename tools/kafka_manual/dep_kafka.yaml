@@ -60,10 +60,19 @@ spec:
                 configMapKeyRef:
                   name: kafka-config
                   key: log.segment.bytes
-          volumeMounts:
-            - name: config-volume
-              mountPath: /opt/kafka/config
-      volumes:
-        - name: config-volume
-          configMap:
-            name: kafka-config
+          command:
+            - sh
+            - -c
+            - |
+              #!/bin/sh
+              cp /opt/kafka/config/server.properties /tmp/server.properties
+              echo "broker.id=${KAFKA_BROKER_ID}" >> /tmp/server.properties
+              echo "listeners=${KAFKA_LISTENERS}" >> /tmp/server.properties
+              echo "advertised.listeners=${KAFKA_ADVERTISED_LISTENERS}" >> /tmp/server.properties
+              echo "zookeeper.connect=${KAFKA_ZOOKEEPER_CONNECT}" >> /tmp/server.properties
+              echo "log.dirs=${KAFKA_LOG_DIRS}" >> /tmp/server.properties
+              echo "log.flush.interval.messages=${KAFKA_LOG_FLUSH_INTERVAL_MESSAGES}" >> /tmp/server.properties
+              echo "log.retention.hours=${KAFKA_LOG_RETENTION_HOURS}" >> /tmp/server.properties
+              echo "log.segment.bytes=${KAFKA_LOG_SEGMENT_BYTES}" >> /tmp/server.properties
+              echo "offsets.topic.replication.factor=${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}" >> /tmp/server.properties
+              exec /opt/kafka/bin/kafka-server-start.sh /tmp/server.properties
