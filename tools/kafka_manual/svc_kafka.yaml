@@ -1,12 +1,12 @@
-# kafka-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: kafka
+  labels:
+    app: kafka-broker
+  name: kafka-service
   namespace: kafka-manual
 spec:
   ports:
-    - port: 9092
-      targetPort: 9092
+  - port: 9092
   selector:
-    app: kafka
+    app: kafka-broker

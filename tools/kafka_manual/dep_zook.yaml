@@ -1,7 +1,8 @@
-# zookeeper-deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  labels:
+    app: zookeeper
   name: zookeeper
   namespace: kafka-manual
 spec:
@@ -15,7 +16,8 @@ spec:
         app: zookeeper
     spec:
       containers:
-        - name: zookeeper
-          image: wurstmeister/zookeeper:latest
+        - image: wurstmeister/zookeeper
+          imagePullPolicy: IfNotPresent
+          name: zookeeper
           ports:
-            - containerPort: 2181
+            - containerPort: 2181

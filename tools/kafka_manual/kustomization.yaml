@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: kafka-manual
 
 resources:
-  - configmap.yaml
+  # - configmap.yaml
   - dep_kafka.yaml
   - dep_zook.yaml
   - svc_kafka.yaml
