@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: debezium
+  namespace: dbz
 spec:
   replicas: 1
   selector:
@@ -15,7 +16,7 @@ spec:
       initContainers:
       - name: init-register-connector
         image: curlimages/curl:7.73.0
-        command: ['sh', '-c', 'until curl -s -o /dev/null -w "%{http_code}" http://localhost:8083/connectors/ -d @/register-postgres.json -X POST -H "Content-Type: application/json" | grep -q "201"; do echo waiting for connect; sleep 5; done']
+        command: ['sh', '-c', 'until curl -s -o /dev/null -w "%{http_code}" http://localhost:8083/connectors/ -d @/register/register-postgres.json -X POST -H "Content-Type: application/json" | grep -q "201"; do echo waiting for connect; sleep 5; done']
         volumeMounts:
         - name: register-connector
           mountPath: /register
@@ -26,7 +27,7 @@ spec:
         - containerPort: 8083
         env:
         - name: BOOTSTRAP_SERVERS
-          value: "kafka:9092"
+          value: "kafka-service.kafka-manual.svc.cluster.local:9092"
         - name: GROUP_ID
           value: "1"
         - name: CONFIG_STORAGE_TOPIC
@@ -36,7 +37,10 @@ spec:
         volumeMounts:
         - name: register-connector
           mountPath: /register
-  volumes:
-  - name: register-connector
-    configMap:
-      name: register-postgres
+      volumes:
+      - name: register-connector
+        configMap:
+          name: register-postgres
+          items:
+            - key: register-postgres.json
+              path: register-postgres.json
