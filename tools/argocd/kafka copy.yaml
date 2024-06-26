@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: dbz
+  name: kafka-manual
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/aryadiahmad4689/infra-test.git'
     targetRevision: 'master'  # Atau spesifikasikan versi chart yang diinginkan
-    path: tools/dbzeium/ #ini adalah path tempat helm chart anda untuk menjalankan aplikasi kalian
+    path: tools/kafka_manual/ #ini adalah path tempat helm chart anda untuk menjalankan aplikasi kalian
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: dbzeium  # Ganti dengan namespace target di kluster Anda
+    namespace: kafka-manual  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: 
       prune: true  # Menghapus sumber daya yang tidak lagi ada dalam repositori
@@ -28,7 +28,4 @@ spec:
         duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
         factor: 2 # a factor to multiply the base duration after each failed retry
         maxDuration: 3m # the maximum amount of time allowed for the backoff strategy
-      
-    
-
 # kubectl apply -f tools/argocd/goappv1-argocd.yaml
