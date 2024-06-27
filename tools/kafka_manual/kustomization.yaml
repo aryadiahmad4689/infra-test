@@ -6,5 +6,7 @@ resources:
   - configmap.yaml
   - dep_kafka.yaml
   - dep_zook.yaml
+  - kafk-conn.yaml
   - svc_kafka.yaml
   - svc_zok.yaml
+  - svc-kafka-con.yaml

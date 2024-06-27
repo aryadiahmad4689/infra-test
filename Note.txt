@@ -44,3 +44,5 @@ kubectl create secret tls grafana-tls --key certified/private.pem --cert certifi
 
 # lihat kalau ada error di ingress controller kong
 kubectl describe ingress appv1-ingress -n kong
+
+kubectl port-forward -n argocd svc/argocd-server 8080:80
