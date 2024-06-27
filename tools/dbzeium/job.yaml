@@ -9,7 +9,7 @@ spec:
       containers:
       - name: register-connector
         image: curlimages/curl:7.73.0
-        command: ['sh', '-c', 'until curl -s -o /dev/null -w "%{http_code}" http://debezium.dbz.svc.cluster.local:8083/connectors/ -d @/register/register-postgres.json -X POST -H "Content-Type: application/json" | grep -q "201"; do echo waiting for connect; sleep 5; done']
+        command: ['sh', '-c', 'echo "Waiting for Debezium to be ready..." && sleep 30 && until curl -s -o /dev/null -w "%{http_code}" http://debezium.dbz.svc.cluster.local:8083/connectors/ -d @/register/register-postgres.json -X POST -H "Content-Type: application/json" | grep -q "201"; do echo waiting for connect; sleep 5; done']
         volumeMounts:
         - name: register-connector
           mountPath: /register

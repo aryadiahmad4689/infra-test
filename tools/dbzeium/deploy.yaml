@@ -27,3 +27,13 @@ spec:
           value: "my_connect_configs"
         - name: OFFSET_STORAGE_TOPIC
           value: "my_connect_offsets"
+        volumeMounts:
+        - name: register-connector
+          mountPath: /register
+      volumes:
+      - name: register-connector
+        configMap:
+          name: register-postgres
+          items:
+            - key: register-postgres.json
+              path: register-postgres.json
