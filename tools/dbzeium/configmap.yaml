@@ -26,6 +26,6 @@ data:
         "key.converter.schemas.enable": false,
         "value.converter": "org.apache.kafka.connect.json.JsonConverter",
         "value.converter.schemas.enable": false,
-        "topic.prefix": "inventory"  # Tambahkan baris ini
+        "topic.prefix": "inventory"
       }
     }
