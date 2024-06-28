@@ -2679,6 +2679,16 @@ sysctlImage:
 ## @param kibana.elasticsearch.hosts [array] Array containing hostnames for the ES instances. Used to generate the URL
 ## @param kibana.elasticsearch.port Port to connect Kibana and ES instance. Used to generate the URL
 ##
+
+elasticsearchSinkConfig:
+  name: elasticsearch-sink
+  connectorClass: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
+  tasksMax: 1
+  topics: log-transactions
+  keyIgnore: true
+  connectionUrl: http://elasticsearch.elk.svc.cluster.local:9200
+  typeName: _doc
+
 kibana:
   elasticsearch:
     hosts:

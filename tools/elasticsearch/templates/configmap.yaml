@@ -3,7 +3,7 @@ Copyright VMware, Inc.
 SPDX-License-Identifier: APACHE-2.0
 */}}
 
-{{- if or .Values.config .Values.extraConfig }}
+{{- if or .Values.config .Values.extraConfig .Values.elasticsearchSinkConfig }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
