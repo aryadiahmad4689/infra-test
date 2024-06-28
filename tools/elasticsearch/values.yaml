@@ -916,7 +916,7 @@ data:
   ## Example:
   ##   heapSize: 128m
   ##
-  heapSize: 1024m
+  heapSize: 512m
   ## Configure Pods Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param data.podSecurityContext.enabled Enabled data pods' Security Context
