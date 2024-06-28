@@ -2684,7 +2684,7 @@ elasticsearchSinkConfig:
   name: elasticsearch-sink
   connectorClass: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
   tasksMax: 1
-  topics: log-transactions
+  topics: inventory.public.users
   keyIgnore: true
   connectionUrl: http://elasticsearch.elk.svc.cluster.local:9200
   typeName: _doc
