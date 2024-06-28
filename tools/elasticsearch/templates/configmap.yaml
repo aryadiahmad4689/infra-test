@@ -22,4 +22,14 @@ data:
   my_elasticsearch.yml: |-
     {{- include "common.tplvalues.render" ( dict "value" .Values.extraConfig "context" $ ) | nindent 4 }}
   {{- end }}
+  {{- if .Values.elasticsearchSinkConfig }}
+  elasticsearch-sink.properties: |-
+    name={{ .Values.elasticsearchSinkConfig.name }}
+    connector.class={{ .Values.elasticsearchSinkConfig.connectorClass }}
+    tasks.max={{ .Values.elasticsearchSinkConfig.tasksMax }}
+    topics={{ .Values.elasticsearchSinkConfig.topics }}
+    key.ignore={{ .Values.elasticsearchSinkConfig.keyIgnore }}
+    connection.url={{ .Values.elasticsearchSinkConfig.connectionUrl }}
+    type.name={{ .Values.elasticsearchSinkConfig.typeName }}
+  {{- end }}
 {{- end }}

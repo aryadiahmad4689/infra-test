@@ -5,4 +5,4 @@ namespace: dbz
 resources:
   - deploy.yaml
   - configmap.yaml
-  - job.yaml
+  # - job.yaml
