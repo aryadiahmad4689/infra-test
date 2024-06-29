@@ -20,7 +20,7 @@ spec:
         - containerPort: 8083
         env:
         - name: BOOTSTRAP_SERVERS
-          value: "kafka-service.kafka-manual.svc.cluster.local:9092"
+          value: "kafka-broker-0.kafka-broker.kafka-manual.svc.cluster.local:9092,kafka-broker-1.kafka-broker.kafka-manual.svc.cluster.local:9092,kafka-broker-2.kafka-broker.kafka-manual.svc.cluster.local:9092"
         - name: GROUP_ID
           value: "1"
         - name: CONFIG_STORAGE_TOPIC
