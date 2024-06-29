@@ -26,16 +26,22 @@ spec:
           value: "your_password_here"
         - name: POSTGRES_DB
           value: "mydb"
+        - name: PGDATA
+          value: "/var/lib/postgresql/data/pgdata"
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
         - name: config-volume
-          mountPath: /var/lib/postgresql/data/postgresql.conf
+          mountPath: /etc/postgresql/postgresql.conf
           subPath: postgresql.conf
+        - name: custom-pgdata
+          mountPath: /var/lib/postgresql/data/pgdata
       volumes:
       - name: config-volume
         configMap:
           name: postgres-config
+      - name: custom-pgdata
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: postgres-storage
