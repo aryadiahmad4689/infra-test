@@ -32,16 +32,12 @@ spec:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
         - name: config-volume
-          mountPath: /etc/postgresql/postgresql.conf
+          mountPath: /var/lib/postgresql/data/pgdata/postgresql.conf
           subPath: postgresql.conf
-        - name: custom-pgdata
-          mountPath: /var/lib/postgresql/data/pgdata
       volumes:
       - name: config-volume
         configMap:
           name: postgres-config
-      - name: custom-pgdata
-        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: postgres-storage
