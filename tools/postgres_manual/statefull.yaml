@@ -14,6 +14,15 @@ spec:
       labels:
         app: postgres
     spec:
+      initContainers:
+      - name: init-postgres
+        image: busybox
+        command: ['sh', '-c', 'cp /config/postgresql.conf /mnt/pgdata/ && chown postgres:postgres /mnt/pgdata/postgresql.conf']
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+        - name: pgdata
+          mountPath: /mnt/pgdata
       containers:
       - name: postgres
         image: postgres:latest
@@ -31,18 +40,23 @@ spec:
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
-        - name: config-volume
-          mountPath: /var/lib/postgresql/data/pgdata/postgresql.conf
-          subPath: postgresql.conf
+        - name: pgdata
+          mountPath: /var/lib/postgresql/data/pgdata
       volumes:
       - name: config-volume
         configMap:
           name: postgres-config
+      - name: pgdata
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: postgres-storage
     spec:
-      accessModes: ["ReadWriteOnce"]
+      accessModes:
+        - ReadWriteOnce
       resources:
         requests:
           storage: 1Gi
+      selector:
+        matchLabels:
+          app: postgres
