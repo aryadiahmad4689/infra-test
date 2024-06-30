@@ -13,7 +13,7 @@ data:
     broker.id.generation.enable=true
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
     listeners=PLAINTEXT://0.0.0.0:9092
-    # advertised.listeners=PLAINTEXT://localhost:9092  # Placeholder to be replaced
+    advertised.listeners=${KAFKA_ADVERTISED_LISTENERS}
     num.network.threads=3
     num.io.threads=8
     socket.send.buffer.bytes=102400
@@ -23,16 +23,15 @@ data:
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=300000
 ---
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: kafka-startup-script
+  name: kafka-entrypoint-script
   namespace: kafka-manual
 data:
-  kafka-startup.sh: |
+  kafka-entrypoint.sh: |
     #!/bin/sh
     POD_NAME=$(hostname)
     ADVERTISED_LISTENER="PLAINTEXT://${POD_NAME}.kafka-broker.kafka-manual.svc.cluster.local:9092"
-    sed -i "s|advertised.listeners=.*|advertised.listeners=${ADVERTISED_LISTENER}|g" /etc/kafka-config/server.properties
+    export KAFKA_ADVERTISED_LISTENERS=$ADVERTISED_LISTENER
     exec kafka-server-start.sh /etc/kafka-config/server.properties

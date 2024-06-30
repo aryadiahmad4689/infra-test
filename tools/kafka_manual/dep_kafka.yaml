@@ -39,13 +39,6 @@ spec:
           value: "/opt/kafka/logs"
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://0.0.0.0:9092
-        command:
-        - sh
-        - -c
-        - |
-          ADVERTISED_LISTENERS="PLAINTEXT://$(hostname).kafka-broker.kafka-manual.svc.cluster.local:9092"
-          echo "advertised.listeners=$ADVERTISED_LISTENERS" >> /etc/kafka-config/server.properties
-          exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
@@ -53,12 +46,17 @@ spec:
           mountPath: /etc/kafka-config
         - name: kafka-logs
           mountPath: /opt/kafka/logs
+        - name: entrypoint-script
+          mountPath: /opt/kafka-entrypoint
       volumes:
       - name: config-volume
         configMap:
           name: kafka-config
       - name: kafka-logs
         emptyDir: {}
+      - name: entrypoint-script
+        configMap:
+          name: kafka-entrypoint-script
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
