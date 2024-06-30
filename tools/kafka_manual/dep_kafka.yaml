@@ -49,7 +49,6 @@ spec:
         - sh
         - -c
         - |
-          export KAFKA_BROKER_ID=$(hostname | awk -F'-' '{print $NF}');
           mkdir -p /kafka/logs;
           exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
@@ -57,10 +56,14 @@ spec:
           mountPath: /kafka
         - name: config-volume
           mountPath: /etc/kafka-config
+        - name: kafka-logs
+          mountPath: /opt/kafka/logs
       volumes:
       - name: config-volume
         configMap:
           name: kafka-config
+      - name: kafka-logs
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
