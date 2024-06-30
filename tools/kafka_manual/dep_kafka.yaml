@@ -40,15 +40,11 @@ spec:
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://0.0.0.0:9092
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: ""
+          value: PLAINTEXT://$(POD_NAME).kafka-broker.kafka-manual.svc.cluster.local:9092
         command:
         - sh
         - -c
         - |
-          export KAFKA_BROKER_ID=$(hostname | awk -F'-' '{print $NF}');
-          export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$(hostname).kafka-broker.kafka-manual.svc.cluster.local:9092;
-          envsubst < /etc/kafka-config/server.properties > /etc/kafka-config/server.properties.envsubst;
-          mv /etc/kafka-config/server.properties.envsubst /etc/kafka-config/server.properties;
           exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
         - name: kafka-storage
