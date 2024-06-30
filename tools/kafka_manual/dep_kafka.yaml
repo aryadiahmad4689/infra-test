@@ -17,11 +17,16 @@ spec:
         app: kafka-broker
     spec:
       containers:
-      - env:
+      - name: kafka-broker
+        image: wurstmeister/kafka
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9092
+        env:
         - name: KAFKA_BROKER_ID
           valueFrom:
             fieldRef:
-              fieldPath: metadata.name
+              fieldPath: metadata.labels['pod-template-hash']
         - name: KAFKA_ZOOKEEPER_CONNECT
           value: zookeeper:2181
         - name: KAFKA_LISTENERS
@@ -32,14 +37,17 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        image: wurstmeister/kafka
-        imagePullPolicy: IfNotPresent
-        name: kafka-broker
-        ports:
-        - containerPort: 9092
+        - name: KAFKA_OPTS
+          value: "-Djava.security.auth.login.config=/etc/kafka-config/server.properties"
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
+        - name: config-volume
+          mountPath: /etc/kafka-config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: kafka-config
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
