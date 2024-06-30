@@ -39,15 +39,12 @@ spec:
           value: "/opt/kafka/logs"
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://0.0.0.0:9092
-        - name: KAFKA_ADVERTISED_LISTENERS
-          value: ""
         command:
         - sh
         - -c
         - |
-          export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$(hostname).kafka-broker.kafka-manual.svc.cluster.local:9092
-          sed -i "s|advertised.listeners=.*|advertised.listeners=$KAFKA_ADVERTISED_LISTENERS|g" /etc/kafka-config/server.properties
-          exec kafka-server-start.sh /etc/kafka-config/server.properties
+          chmod +x /opt/kafka/startup/kafka-startup.sh
+          /opt/kafka/startup/kafka-startup.sh
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
@@ -55,12 +52,17 @@ spec:
           mountPath: /etc/kafka-config
         - name: kafka-logs
           mountPath: /opt/kafka/logs
+        - name: startup-script
+          mountPath: /opt/kafka/startup
       volumes:
       - name: config-volume
         configMap:
           name: kafka-config
       - name: kafka-logs
         emptyDir: {}
+      - name: startup-script
+        configMap:
+          name: kafka-startup-script
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage

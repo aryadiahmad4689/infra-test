@@ -22,3 +22,17 @@ data:
     log.retention.hours=168
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=300000
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-startup-script
+  namespace: kafka-manual
+data:
+  kafka-startup.sh: |
+    #!/bin/sh
+    POD_NAME=$(hostname)
+    ADVERTISED_LISTENER="PLAINTEXT://${POD_NAME}.kafka-broker.kafka-manual.svc.cluster.local:9092"
+    sed -i "s|advertised.listeners=.*|advertised.listeners=${ADVERTISED_LISTENER}|g" /etc/kafka-config/server.properties
+    exec kafka-server-start.sh /etc/kafka-config/server.properties
