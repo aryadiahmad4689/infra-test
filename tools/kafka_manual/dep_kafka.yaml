@@ -39,11 +39,14 @@ spec:
           value: "/opt/kafka/logs"
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://0.0.0.0:9092
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: ""
         command:
         - sh
         - -c
         - |
-          export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$(hostname -f).kafka-broker.kafka-manual.svc.cluster.local:9092
+          export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$(hostname).kafka-broker.kafka-manual.svc.cluster.local:9092
+          sed -i "s|advertised.listeners=.*|advertised.listeners=$KAFKA_ADVERTISED_LISTENERS|g" /etc/kafka-config/server.properties
           exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
         - name: kafka-storage
