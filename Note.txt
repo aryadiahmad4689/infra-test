@@ -18,6 +18,8 @@ helm upgrade --install argocd argo/argo-cd --namespace argocd -f tools/run_app/a
 helm install argocd-staging argo/argo-cd --namespace argocd-staging
 helm install argocd-prod argo/argo-cd --namespace argocd-prod
 
+helm install argocd argo/argo-cd -n argocd
+
 kubectl get secret argocd-initial-admin-secret -n argocd -o jsonpath="{.data.password}" | base64 --decode; echo
 
 kubectl apply -f tools/run_app/staging_argocd.yaml
