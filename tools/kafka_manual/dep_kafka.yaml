@@ -43,8 +43,9 @@ spec:
         - sh
         - -c
         - |
-          chmod +x /opt/kafka/startup/kafka-startup.sh
-          /opt/kafka/startup/kafka-startup.sh
+          ADVERTISED_LISTENERS="PLAINTEXT://$(hostname).kafka-broker.kafka-manual.svc.cluster.local:9092"
+          echo "advertised.listeners=$ADVERTISED_LISTENERS" >> /etc/kafka-config/server.properties
+          exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
@@ -52,17 +53,12 @@ spec:
           mountPath: /etc/kafka-config
         - name: kafka-logs
           mountPath: /opt/kafka/logs
-        - name: startup-script
-          mountPath: /opt/kafka/startup
       volumes:
       - name: config-volume
         configMap:
           name: kafka-config
       - name: kafka-logs
         emptyDir: {}
-      - name: startup-script
-        configMap:
-          name: kafka-startup-script
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
