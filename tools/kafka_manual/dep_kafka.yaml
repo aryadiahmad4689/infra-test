@@ -31,25 +31,21 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: HOSTNAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
         - name: KAFKA_BROKER_ID
           value: "$(hostname | awk -F'-' '{print $$NF}')"
         - name: KAFKA_ZOOKEEPER_CONNECT
           value: zookeeper:2181
         - name: KAFKA_LOG_DIRS
-          value: "/kafka/logs"
+          value: "/opt/kafka/logs"
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://0.0.0.0:9092
         - name: KAFKA_ADVERTISED_LISTENERS
-          value: PLAINTEXT://$(HOSTNAME).kafka-broker.kafka-manual.svc.cluster.local:9092
+          value: PLAINTEXT://$(hostname).kafka-broker.kafka-manual.svc.cluster.local:9092
         command:
         - sh
         - -c
         - |
-          mkdir -p /kafka/logs;
+          export KAFKA_BROKER_ID=$(hostname | awk -F'-' '{print $NF}');
           exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
         - name: kafka-storage
