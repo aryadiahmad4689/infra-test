@@ -43,7 +43,7 @@ spec:
         - sh
         - -c
         - |
-          export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$(hostname -f):9092
+          export KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://$(hostname -f).kafka-broker.kafka-manual.svc.cluster.local:9092
           exec kafka-server-start.sh /etc/kafka-config/server.properties
         volumeMounts:
         - name: kafka-storage
