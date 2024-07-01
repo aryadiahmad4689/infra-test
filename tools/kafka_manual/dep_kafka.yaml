@@ -74,7 +74,7 @@ spec:
           mountPath: /etc/kafka-config
         - name: kafka-logs
           mountPath: /opt/kafka/logs
-        command: ["sh", "-c", "cp /tmp/server.properties /etc/kafka-config/server.properties && exec kafka-server-start.sh /etc/kafka-config/server.properties"]
+        command: ["sh", "-c", "if [ -f /tmp/server.properties ]; then cp /tmp/server.properties /etc/kafka-config/server.properties; else echo 'File /tmp/server.properties not found'; exit 1; fi && exec kafka-server-start.sh /etc/kafka-config/server.properties"]
       volumes:
       - name: config-volume
         configMap:
