@@ -37,3 +37,8 @@ spec:
           items:
             - key: register-postgres.json
               path: register-postgres.json
+
+# kubectl exec -it debezium-5b7bd5b49b-q6nd4 -n dbz -- curl -X POST -H "Content-Type: application/json" --data @/register/register-postgres.json http://localhost:8083/connectors
+# kubectl exec -it debezium-5b7bd5b49b-q6nd4 -n dbz -- curl http://localhost:8083/connectors/inventory-connector/status
+
+# kubectl exec kafka-broker-0 -- ./bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic inventory.public.users --from-beginning --max-messages 10
