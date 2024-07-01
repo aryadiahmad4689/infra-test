@@ -14,14 +14,23 @@ spec:
       labels:
         app: kafka-broker
     spec:
+      initContainers:
+      - name: init-config
+        image: busybox
+        command: ['sh', '-c', 'cp /etc/kafka/* /var/lib/kafka/config/ && chmod -R 777 /var/lib/kafka/config']
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/kafka
+        - name: kafka-config
+          mountPath: /var/lib/kafka/config
       containers:
       - name: kafka
         image: wurstmeister/kafka
         ports:
         - containerPort: 9092
         volumeMounts:
-        - name: config-volume
-          mountPath: /opt/kafka/config  # Assuming this is the correct path
+        - name: kafka-config
+          mountPath: /opt/kafka/config
         env:
         - name: KAFKA_BROKER_ID
           value: "1"
@@ -35,6 +44,8 @@ spec:
       - name: config-volume
         configMap:
           name: kafka-config-1
+      - name: kafka-config
+        emptyDir: {}
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
