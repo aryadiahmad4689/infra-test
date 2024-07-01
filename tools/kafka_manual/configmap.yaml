@@ -13,7 +13,7 @@ data:
     broker.id=0
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
     listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-broker-1-0.kafka-broker.kafka-manual.svc.cluster.local:9092
+    advertised.listeners=PLAINTEXT://kafka-broker-0.kafka-broker.kafka-manual.svc.cluster.local:9092
     num.network.threads=3
     num.io.threads=8
     socket.send.buffer.bytes=102400
@@ -22,53 +22,53 @@ data:
     log.retention.hours=168
     log.segment.bytes=1073741824
     log.retention.check.interval.ms=300000
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kafka-config-2
-  namespace: kafka-manual
-data:
-  server.properties: |
-    auto.create.topics.enable=false
-    num.partitions=3
-    default.replication.factor=2
-    log.dirs=/kafka-logs
-    zookeeper.connect=zookeeper:2181
-    broker.id=1
-    listener.security.protocol.map=PLAINTEXT:PLAINTEXT
-    listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-broker-2-0.kafka-broker.kafka-manual.svc.cluster.local:9092
-    num.network.threads=4
-    num.io.threads=10
-    socket.send.buffer.bytes=204800
-    socket.receive.buffer.bytes=204800
-    socket.request.max.bytes=209715200
-    log.retention.hours=72
-    log.segment.bytes=536870912
-    log.retention.check.interval.ms=600000
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kafka-config-3
-  namespace: kafka-manual
-data:
-  server.properties: |
-    auto.create.topics.enable=true
-    num.partitions=4
-    default.replication.factor=3
-    log.dirs=/kafka-logs
-    zookeeper.connect=zookeeper:2181
-    broker.id=2
-    listener.security.protocol.map=PLAINTEXT:PLAINTEXT
-    listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-broker-3-0.kafka-broker.kafka-manual.svc.cluster.local:9092
-    num.network.threads=5
-    num.io.threads=12
-    socket.send.buffer.bytes=307200
-    socket.receive.buffer.bytes=307200
-    socket.request.max.bytes=314572800
-    log.retention.hours=48
-    log.segment.bytes=536870912
-    log.retention.check.interval.ms=900000
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: kafka-config-2
+#   namespace: kafka-manual
+# data:
+#   server.properties: |
+#     auto.create.topics.enable=false
+#     num.partitions=3
+#     default.replication.factor=2
+#     log.dirs=/kafka-logs
+#     zookeeper.connect=zookeeper:2181
+#     broker.id=1
+#     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
+#     listeners=PLAINTEXT://0.0.0.0:9092
+#     advertised.listeners=PLAINTEXT://kafka-broker-2-0.kafka-broker.kafka-manual.svc.cluster.local:9092
+#     num.network.threads=4
+#     num.io.threads=10
+#     socket.send.buffer.bytes=204800
+#     socket.receive.buffer.bytes=204800
+#     socket.request.max.bytes=209715200
+#     log.retention.hours=72
+#     log.segment.bytes=536870912
+#     log.retention.check.interval.ms=600000
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: kafka-config-3
+#   namespace: kafka-manual
+# data:
+#   server.properties: |
+#     auto.create.topics.enable=true
+#     num.partitions=4
+#     default.replication.factor=3
+#     log.dirs=/kafka-logs
+#     zookeeper.connect=zookeeper:2181
+#     broker.id=2
+#     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
+#     listeners=PLAINTEXT://0.0.0.0:9092
+#     advertised.listeners=PLAINTEXT://kafka-service.kafka-manual.svc.cluster.local:9092
+#     num.network.threads=5
+#     num.io.threads=12
+#     socket.send.buffer.bytes=307200
+#     socket.receive.buffer.bytes=307200
+#     socket.request.max.bytes=314572800
+#     log.retention.hours=48
+#     log.segment.bytes=536870912
+#     log.retention.check.interval.ms=900000
