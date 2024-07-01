@@ -15,7 +15,7 @@ spec:
         app: kafka-broker
     spec:
       initContainers:
-      - name: init-config
+      - name: copy-config
         image: busybox
         command: ['sh', '-c', 'cp /etc/kafka/* /var/lib/kafka/config/ && chmod -R 777 /var/lib/kafka/config']
         volumeMounts:
