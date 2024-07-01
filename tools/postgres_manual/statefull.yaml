@@ -24,6 +24,7 @@ spec:
         command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data"]
         securityContext:
           runAsUser: 0  # Jalankan initContainer sebagai root
+          privileged: true  # Berikan izin lebih tinggi
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
