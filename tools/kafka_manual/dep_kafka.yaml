@@ -26,6 +26,8 @@ spec:
           value: zookeeper:2181
         - name: KAFKA_LISTENERS
           value: PLAINTEXT://0.0.0.0:9092  # Directly set Zookeeper connect information
+        - name: KAFKA_ADVERTISED_LISTENERS
+          value: PLAINTEXT://kafka-broker.kafka-manual.svc.cluster.local:9092
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
