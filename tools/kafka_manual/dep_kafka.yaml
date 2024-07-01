@@ -26,7 +26,7 @@ spec:
         securityContext:
           runAsUser: 0
           runAsGroup: 0
-        command: ['sh', '-c', "sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config/server.properties"]
+        command: ['sh', '-c', "sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -65,8 +65,8 @@ spec:
           mountPath: /etc/kafka-config
           subPath: server.properties
         - name: kafka-logs
-          mountPath: /opt/kafka/logs
-        command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config/server.properties"]
+          mountPath: /kafka-logs
+        command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config"]
       volumes:
       - name: config-volume
         configMap:
