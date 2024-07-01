@@ -63,7 +63,6 @@ spec:
           mountPath: /kafka
         - name: config-volume
           mountPath: /etc/kafka-config
-          subPath: server.properties
         - name: kafka-logs
           mountPath: /kafka-logs
         command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config/server.properties"]
