@@ -70,5 +70,5 @@ data:
     socket.receive.buffer.bytes=307200
     socket.request.max.bytes=314572800
     log.retention.hours=48
-    log.segment.bytes=2147483648
+    log.segment.bytes=536870912
     log.retention.check.interval.ms=900000
