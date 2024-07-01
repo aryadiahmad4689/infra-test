@@ -30,6 +30,10 @@ spec:
         volumeMounts:
         - name: kafka-config
           mountPath: /etc/kafka
+      volumes:
+      - name: kafka-config
+        configMap:
+          name: kafka-config-1
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
@@ -38,10 +42,6 @@ spec:
       resources:
         requests:
           storage: 50Gi
-  volumes:
-  - name: kafka-config
-    configMap:
-      name: kafka-config-1
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -75,6 +75,10 @@ spec:
         volumeMounts:
         - name: kafka-config
           mountPath: /etc/kafka
+      volumes:
+      - name: kafka-config
+        configMap:
+          name: kafka-config-2
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
@@ -83,10 +87,7 @@ spec:
       resources:
         requests:
           storage: 50Gi
-  volumes:
-  - name: kafka-config
-    configMap:
-      name: kafka-config-2
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -120,6 +121,10 @@ spec:
         volumeMounts:
         - name: kafka-config
           mountPath: /etc/kafka
+      volumes:
+      - name: kafka-config
+        configMap:
+          name: kafka-config-3
   volumeClaimTemplates:
   - metadata:
       name: kafka-storage
@@ -128,7 +133,3 @@ spec:
       resources:
         requests:
           storage: 50Gi
-  volumes:
-  - name: kafka-config
-    configMap:
-      name: kafka-config-3
