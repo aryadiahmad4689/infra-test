@@ -17,7 +17,7 @@ spec:
       initContainers:
       - name: copy-config
         image: busybox
-        command: ['sh', '-c', 'cp /etc/kafka/* /var/lib/kafka/config/ && chmod -R 777 /var/lib/kafka/config']
+        command: ['sh', '-c', 'cp /etc/kafka/* /var/lib/kafka/config/ && cp /etc/kafka/log4j.properties /opt/kafka/config/ && chmod -R 777 /var/lib/kafka/config']
         volumeMounts:
         - name: config-volume
           mountPath: /etc/kafka
