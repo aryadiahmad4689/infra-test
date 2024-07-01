@@ -20,8 +20,10 @@ spec:
         fsGroup: 999    # Setel fsGroup untuk memastikan izin yang benar
       initContainers:
       - name: init-chown
-        image: alpine
+        image: debian
         command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data"]
+        securityContext:
+          runAsUser: 0  # Jalankan initContainer sebagai root
         volumeMounts:
         - name: postgres-storage
           mountPath: /var/lib/postgresql/data
