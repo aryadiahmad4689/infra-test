@@ -17,7 +17,7 @@ data:
         "database.server.name": "dbserver1",
         "table.include.list": "public.users,public.orders",
         "plugin.name": "pgoutput",
-        "database.history.kafka.bootstrap.servers": "kafka-broker.kafka-manual.svc.cluster.local:9092",
+        "database.history.kafka.bootstrap.servers": "kafka-service.kafka-manual.svc.cluster.local:9092",
         "database.history.kafka.topic": "schema-changes.inventory",
         "database.history.kafka.topic.auto.create": "true",
         "transforms": "unwrap",
