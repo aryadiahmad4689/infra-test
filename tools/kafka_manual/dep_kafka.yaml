@@ -37,6 +37,15 @@ spec:
           mountPath: /etc/kafka-config
         - name: tmp-config
           mountPath: /tmp
+      - name: log-init
+        image: busybox
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
+        command: ['sh', '-c', "mkdir -p /opt/kafka/logs && chown -R 1000:1000 /opt/kafka/logs"]
+        volumeMounts:
+        - name: kafka-storage
+          mountPath: /opt/kafka
       containers:
       - name: kafka-broker
         image: wurstmeister/kafka
