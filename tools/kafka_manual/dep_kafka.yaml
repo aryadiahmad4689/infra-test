@@ -35,8 +35,6 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/kafka-config
-          subPath: server.properties
-          readOnly: true
         - name: modified-config-volume
           mountPath: /etc/kafka-config-modified
       containers:
