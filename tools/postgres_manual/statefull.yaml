@@ -17,13 +17,7 @@ spec:
       securityContext:
         runAsUser: 999  # Jalankan sebagai user postgres
         runAsGroup: 999 # Jalankan sebagai group postgres
-      initContainers:
-      - name: change-permissions
-        image: busybox
-        command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data"]
-        volumeMounts:
-        - name: postgres-storage
-          mountPath: /var/lib/postgresql/data
+        fsGroup: 999    # Pastikan fsGroup diatur
       containers:
       - name: postgres
         image: postgres:latest
