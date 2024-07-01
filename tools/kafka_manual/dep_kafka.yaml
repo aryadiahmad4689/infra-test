@@ -26,7 +26,7 @@ spec:
         securityContext:
           runAsUser: 0
           runAsGroup: 0
-        command: ['sh', '-c', "sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config/server.properties"]
+        command: ['sh', '-c', "cp /etc/kafka-config/server.properties /etc/kafka-config-modified/server.properties && sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config-modified/server.properties"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -36,7 +36,9 @@ spec:
         - name: config-volume
           mountPath: /etc/kafka-config
           subPath: server.properties
-          readOnly: false
+          readOnly: true
+        - name: modified-config-volume
+          mountPath: /etc/kafka-config-modified
       containers:
       - name: kafka-broker
         image: wurstmeister/kafka
@@ -61,7 +63,7 @@ spec:
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
-        - name: config-volume
+        - name: modified-config-volume
           mountPath: /etc/kafka-config
         - name: kafka-logs
           mountPath: /kafka-logs
@@ -73,6 +75,8 @@ spec:
           items:
           - key: server.properties
             path: server.properties
+      - name: modified-config-volume
+        emptyDir: {}
       - name: kafka-logs
         emptyDir: {}
   volumeClaimTemplates:
