@@ -63,7 +63,7 @@ data:
     broker.id=2
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
     listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-broker-1-0.kafka-broker.kafka-manual.svc.cluster.local:9092
+    advertised.listeners=PLAINTEXT://kafka-broker-3-0.kafka-broker.kafka-manual.svc.cluster.local:9092
     num.network.threads=5
     num.io.threads=12
     socket.send.buffer.bytes=307200
