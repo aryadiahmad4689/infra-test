@@ -13,7 +13,7 @@ data:
     broker.id=0
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
     listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-0.kafka-broker.kafka-manual.svc.cluster.local:9092
+    advertised.listeners=PLAINTEXT://kafka-broker-1-0.kafka-broker.kafka-manual.svc.cluster.local:9092
     num.network.threads=3
     num.io.threads=8
     socket.send.buffer.bytes=102400
@@ -38,7 +38,7 @@ data:
     broker.id=1
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
     listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-1.kafka-broker.kafka-manual.svc.cluster.local:9092
+    advertised.listeners=PLAINTEXT://kafka-broker-2-0.kafka-broker.kafka-manual.svc.cluster.local:9092
     num.network.threads=4
     num.io.threads=10
     socket.send.buffer.bytes=204800
@@ -63,7 +63,7 @@ data:
     broker.id=2
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT
     listeners=PLAINTEXT://0.0.0.0:9092
-    advertised.listeners=PLAINTEXT://kafka-2.kafka-broker.kafka-manual.svc.cluster.local:9092
+    advertised.listeners=PLAINTEXT://kafka-broker-1-0.kafka-broker.kafka-manual.svc.cluster.local:9092
     num.network.threads=5
     num.io.threads=12
     socket.send.buffer.bytes=307200
