@@ -20,8 +20,8 @@ spec:
         fsGroup: 999    # Setel fsGroup untuk memastikan izin yang benar
       initContainers:
       - name: init-chown-chmod
-        image: debian
-        command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data && chmod -R 0700 /var/lib/postgresql/data"]
+        image: postgres:latest
+        command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data && chmod -R 0700 /var/lib/postgresql/data && gosu postgres initdb -D /var/lib/postgresql/data"]
         securityContext:
           runAsUser: 0  # Jalankan initContainer sebagai root
           privileged: true  # Berikan izin lebih tinggi
