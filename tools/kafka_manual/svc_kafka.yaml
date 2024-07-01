@@ -5,8 +5,7 @@ metadata:
   namespace: kafka-manual
 spec:
   ports:
-  - port: 9092
-    name: broker
-  clusterIP: None
+    - port: 9092
+  clusterIP: None  # Headless service
   selector:
-    app: kafka-broker
+    app: kafka  # Pastikan ini sesuai dengan label pada pod Kafka Anda
