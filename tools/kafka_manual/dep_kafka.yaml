@@ -22,6 +22,8 @@ spec:
         ports:
         - containerPort: 9092
         env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "zookeeper:2181"  # Directly set Zookeeper connect information
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
@@ -42,6 +44,7 @@ spec:
       resources:
         requests:
           storage: 50Gi
+
 ---
 apiVersion: apps/v1
 kind: StatefulSet
@@ -67,6 +70,8 @@ spec:
         ports:
         - containerPort: 9092
         env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "zookeeper:2181"  # Directly set Zookeeper connect information
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
@@ -113,6 +118,8 @@ spec:
         ports:
         - containerPort: 9092
         env:
+        - name: KAFKA_ZOOKEEPER_CONNECT
+          value: "zookeeper:2181"  # Directly set Zookeeper connect information
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
