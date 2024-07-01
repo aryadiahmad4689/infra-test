@@ -17,7 +17,14 @@ spec:
       securityContext:
         runAsUser: 999  # Jalankan sebagai user postgres
         runAsGroup: 999 # Jalankan sebagai group postgres
-        fsGroup: 999    # Pastikan fsGroup diatur
+        fsGroup: 999    # Setel fsGroup untuk memastikan izin yang benar
+      initContainers:
+      - name: init-chown
+        image: alpine
+        command: ["sh", "-c", "chown -R 999:999 /var/lib/postgresql/data"]
+        volumeMounts:
+        - name: postgres-storage
+          mountPath: /var/lib/postgresql/data
       containers:
       - name: postgres
         image: postgres:latest
