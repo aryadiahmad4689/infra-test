@@ -8,7 +8,7 @@ data:
     auto.create.topics.enable=true
     num.partitions=1
     default.replication.factor=1
-    log.dirs=/kafka-logs
+    log.dirs=/opt/kafka/logs
     zookeeper.connect=zookeeper:2181
     broker.id.generation.enable=true
     listener.security.protocol.map=PLAINTEXT:PLAINTEXT

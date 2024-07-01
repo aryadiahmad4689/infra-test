@@ -24,9 +24,9 @@ spec:
       - name: config-init
         image: busybox
         securityContext:
-          runAsUser: 0
-          runAsGroup: 0
-        command: ['sh', '-c', "cp /etc/kafka-config/server.properties /etc/kafka-config-modified/server.properties && sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config-modified/server.properties"]
+          runAsUser: 1000
+          runAsGroup: 1000
+        command: ['sh', '-c', "sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config/server.properties"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -35,8 +35,8 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/kafka-config
-        - name: modified-config-volume
-          mountPath: /etc/kafka-config-modified
+          subPath: server.properties
+          readOnly: false
       containers:
       - name: kafka-broker
         image: wurstmeister/kafka
@@ -49,11 +49,11 @@ spec:
             fieldRef:
               fieldPath: metadata.name
         - name: KAFKA_BROKER_ID
-          value: "$(hostname | awk -F'-' '{print $$NF}')"
+          value: "$(hostname | awk -F'-' '{print $NF}')"
         - name: KAFKA_ZOOKEEPER_CONNECT
           value: zookeeper:2181
         - name: KAFKA_LOG_DIRS
-          value: "/kafka-logs"
+          value: "/opt/kafka/logs"
         - name: KAFKA_ADVERTISED_LISTENERS
           value: "PLAINTEXT://$(POD_NAME).kafka-broker.kafka-manual.svc.cluster.local:9092"
         - name: KAFKA_LISTENERS
@@ -61,10 +61,11 @@ spec:
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
-        - name: modified-config-volume
+        - name: config-volume
           mountPath: /etc/kafka-config
+          subPath: server.properties
         - name: kafka-logs
-          mountPath: /kafka-logs
+          mountPath: /opt/kafka/logs
         command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config/server.properties"]
       volumes:
       - name: config-volume
@@ -73,8 +74,6 @@ spec:
           items:
           - key: server.properties
             path: server.properties
-      - name: modified-config-volume
-        emptyDir: {}
       - name: kafka-logs
         emptyDir: {}
   volumeClaimTemplates:
