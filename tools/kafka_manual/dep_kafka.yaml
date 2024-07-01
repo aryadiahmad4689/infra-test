@@ -1,61 +1,134 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: kafka-broker
+  name: kafka-broker-1
   namespace: kafka-manual
 spec:
-  serviceName: kafka-broker
-  replicas: 3
+  serviceName: "kafka"
+  replicas: 1
   selector:
     matchLabels:
-      app: kafka-broker
+      app: kafka
+      broker: "1"
   template:
     metadata:
       labels:
-        app: kafka-broker
+        app: kafka
+        broker: "1"
     spec:
       containers:
       - name: kafka
-        image: wurstmeister/kafka:latest
+        image: wurstmeister/kafka
         ports:
         - containerPort: 9092
         env:
-        - name: KAFKA_BROKER_ID
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "zookeeper:2181"
-        - name: KAFKA_ADVERTISED_LISTENERS
-          value: "PLAINTEXT://$(POD_NAME).kafka-broker.kafka-manual.svc.cluster.local:9092"
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: KAFKA_CFG_auto_create_topics_enable
+        - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
-              name: kafka-config
-              key: kafka.properties
+              name: kafka-config-1
+              key: server.properties
         volumeMounts:
-        - name: kafka-config-volume
-          mountPath: /etc/kafka/kafka.properties
-          subPath: kafka.properties
-          readOnly: true
-        - name: kafka-logs
-          mountPath: /kafka-logs
-      volumes:
-      - name: kafka-config-volume
-        configMap:
-          name: kafka-config
-          items:
-          - key: kafka.properties
-            path: kafka.properties
+        - name: kafka-config
+          mountPath: /etc/kafka
   volumeClaimTemplates:
   - metadata:
-      name: kafka-logs
+      name: kafka-storage
     spec:
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: ["ReadWriteOnce"]
       resources:
         requests:
-          storage: 1Gi
+          storage: 50Gi
+  volumes:
+  - name: kafka-config
+    configMap:
+      name: kafka-config-1
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-broker-2
+  namespace: kafka-manual
+spec:
+  serviceName: "kafka"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+      broker: "2"
+  template:
+    metadata:
+      labels:
+        app: kafka
+        broker: "2"
+    spec:
+      containers:
+      - name: kafka
+        image: wurstmeister/kafka
+        ports:
+        - containerPort: 9092
+        env:
+        - name: KAFKA_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config-2
+              key: server.properties
+        volumeMounts:
+        - name: kafka-config
+          mountPath: /etc/kafka
+  volumeClaimTemplates:
+  - metadata:
+      name: kafka-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 50Gi
+  volumes:
+  - name: kafka-config
+    configMap:
+      name: kafka-config-2
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: kafka-broker-3
+  namespace: kafka-manual
+spec:
+  serviceName: "kafka"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka
+      broker: "3"
+  template:
+    metadata:
+      labels:
+        app: kafka
+        broker: "3"
+    spec:
+      containers:
+      - name: kafka
+        image: wurstmeister/kafka
+        ports:
+        - containerPort: 9092
+        env:
+        - name: KAFKA_CONFIG
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config-3
+              key: server.properties
+        volumeMounts:
+        - name: kafka-config
+          mountPath: /etc/kafka
+  volumeClaimTemplates:
+  - metadata:
+      name: kafka-storage
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 50Gi
+  volumes:
+  - name: kafka-config
+    configMap:
+      name: kafka-config-3
