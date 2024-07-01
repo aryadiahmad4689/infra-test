@@ -35,6 +35,8 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/kafka-config
+          subPath: server.properties
+          readOnly: false
       containers:
       - name: kafka-broker
         image: wurstmeister/kafka
@@ -61,6 +63,7 @@ spec:
           mountPath: /kafka
         - name: config-volume
           mountPath: /etc/kafka-config
+          subPath: server.properties
         - name: kafka-logs
           mountPath: /opt/kafka/logs
         command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config/server.properties"]
@@ -68,6 +71,9 @@ spec:
       - name: config-volume
         configMap:
           name: kafka-config
+          items:
+          - key: server.properties
+            path: server.properties
       - name: kafka-logs
         emptyDir: {}
   volumeClaimTemplates:
