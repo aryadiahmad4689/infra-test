@@ -73,7 +73,7 @@ spec:
         - name: tmp-config
           mountPath: /etc/kafka-config
         - name: kafka-logs
-          mountPath: /kafka-logs
+          mountPath: /opt/kafka/logs
         command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config/server.properties"]
       volumes:
       - name: config-volume
