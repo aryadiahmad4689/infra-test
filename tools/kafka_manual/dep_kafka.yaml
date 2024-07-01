@@ -26,7 +26,7 @@ spec:
         securityContext:
           runAsUser: 0
           runAsGroup: 0
-        command: ['sh', '-c', "cp /etc/kafka-config/server.properties /tmp/server.properties && sed -i 's/__POD_NAME__/$POD_NAME/g' /tmp/server.properties"]
+        command: ['sh', '-c', "sed -i 's/__POD_NAME__/$POD_NAME/' /etc/kafka-config/server.properties"]
         env:
         - name: POD_NAME
           valueFrom:
@@ -35,17 +35,8 @@ spec:
         volumeMounts:
         - name: config-volume
           mountPath: /etc/kafka-config
-        - name: tmp-config
-          mountPath: /tmp
-      - name: log-init
-        image: busybox
-        securityContext:
-          runAsUser: 0
-          runAsGroup: 0
-        command: ['sh', '-c', "mkdir -p /opt/kafka/logs && chown -R 1000:1000 /opt/kafka/logs"]
-        volumeMounts:
-        - name: kafka-storage
-          mountPath: /opt/kafka
+          subPath: server.properties
+          readOnly: false
       containers:
       - name: kafka-broker
         image: wurstmeister/kafka
@@ -70,17 +61,19 @@ spec:
         volumeMounts:
         - name: kafka-storage
           mountPath: /kafka
-        - name: tmp-config
+        - name: config-volume
           mountPath: /etc/kafka-config
+          subPath: server.properties
         - name: kafka-logs
           mountPath: /opt/kafka/logs
-        command: ["sh", "-c", "if [ -f /tmp/server.properties ]; then cp /tmp/server.properties /etc/kafka-config/server.properties; else echo 'File /tmp/server.properties not found'; exit 1; fi && exec kafka-server-start.sh /etc/kafka-config/server.properties"]
+        command: ["sh", "-c", "exec kafka-server-start.sh /etc/kafka-config/server.properties"]
       volumes:
       - name: config-volume
         configMap:
           name: kafka-config
-      - name: tmp-config
-        emptyDir: {}
+          items:
+          - key: server.properties
+            path: server.properties
       - name: kafka-logs
         emptyDir: {}
   volumeClaimTemplates:
