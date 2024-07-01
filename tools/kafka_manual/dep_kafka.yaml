@@ -23,7 +23,9 @@ spec:
         - containerPort: 9092
         env:
         - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "zookeeper:2181"  # Directly set Zookeeper connect information
+          value: zookeeper:2181
+        - name: KAFKA_LISTENERS
+          value: PLAINTEXT://0.0.0.0:9092  # Directly set Zookeeper connect information
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
@@ -71,7 +73,9 @@ spec:
         - containerPort: 9092
         env:
         - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "zookeeper:2181"  # Directly set Zookeeper connect information
+          value: zookeeper:2181
+        - name: KAFKA_LISTENERS
+          value: PLAINTEXT://0.0.0.0:9092 # Directly set Zookeeper connect information
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
@@ -119,7 +123,9 @@ spec:
         - containerPort: 9092
         env:
         - name: KAFKA_ZOOKEEPER_CONNECT
-          value: "zookeeper:2181"  # Directly set Zookeeper connect information
+          value: zookeeper:2181
+        - name: KAFKA_LISTENERS
+          value: PLAINTEXT://0.0.0.0:9092
         - name: KAFKA_CONFIG
           valueFrom:
             configMapKeyRef:
