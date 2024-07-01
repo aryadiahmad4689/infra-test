@@ -26,18 +26,21 @@ spec:
               fieldPath: metadata.name
         - name: KAFKA_ZOOKEEPER_CONNECT
           value: "zookeeper:2181"
-        - name: KAFKA_LISTENERS
-          value: "PLAINTEXT://0.0.0.0:9092"
         - name: KAFKA_ADVERTISED_LISTENERS
           value: "PLAINTEXT://$(POD_NAME).kafka-broker.kafka-manual.svc.cluster.local:9092"
         - name: POD_NAME
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: KAFKA_CFG_auto_create_topics_enable
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: kafka.properties
         volumeMounts:
         - name: kafka-config-volume
-          mountPath: /opt/kafka/config/server.properties
-          subPath: server.properties
+          mountPath: /etc/kafka/kafka.properties
+          subPath: kafka.properties
           readOnly: true
         - name: kafka-logs
           mountPath: /kafka-logs
@@ -46,8 +49,8 @@ spec:
         configMap:
           name: kafka-config
           items:
-          - key: server.properties
-            path: server.properties
+          - key: kafka.properties
+            path: kafka.properties
   volumeClaimTemplates:
   - metadata:
       name: kafka-logs
