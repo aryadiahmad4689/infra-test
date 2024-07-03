@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kafka-copy
+  name: kafka-test
   namespace: argocd
 spec:
   project: default
@@ -11,7 +11,7 @@ spec:
     path: tools/strimzi-kafka-operator/kafka/ #ini adalah path tempat helm chart anda untuk menjalankan aplikasi kalian
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: kafka-strimzi  # Ganti dengan namespace target di kluster Anda
+    namespace: kafka-test  # Ganti dengan namespace target di kluster Anda
   syncPolicy:
     automated: 
       prune: true  # Menghapus sumber daya yang tidak lagi ada dalam repositori

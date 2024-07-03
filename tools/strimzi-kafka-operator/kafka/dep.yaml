@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: kafka-strimzi
+  name: kafka-test
 spec:
   kafka:
     config:
