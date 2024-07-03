@@ -29,7 +29,13 @@ spec:
       initialDelaySeconds: 15
       timeoutSeconds: 5
     replicas: 3
-    resources: {}
+    resources:
+      requests:
+        memory: "2Gi"
+        cpu: "1"
+      limits:
+        memory: "4Gi"
+        cpu: "2"
     storage:
       deleteClaim: false
       size: 1Gi
@@ -42,7 +48,13 @@ spec:
       initialDelaySeconds: 15
       timeoutSeconds: 5
     replicas: 3
-    resources: {}
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "0.5"
+      limits:
+        memory: "2Gi"
+        cpu: "1"
     storage:
       deleteClaim: false
       size: 1Gi
