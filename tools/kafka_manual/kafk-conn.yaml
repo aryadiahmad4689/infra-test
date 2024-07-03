@@ -20,7 +20,7 @@ spec:
         - containerPort: 8083
         env:
         - name: CONNECT_BOOTSTRAP_SERVERS
-          value: "kafka-broker.kafka-manual.svc.cluster.local:9092"
+          value: "kafka-service.kafka-manual.svc.cluster.local:9092"
         - name: CONNECT_REST_ADVERTISED_HOST_NAME
           value: "kafka-connect"
         - name: CONNECT_GROUP_ID
